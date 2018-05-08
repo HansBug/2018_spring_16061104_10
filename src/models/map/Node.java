@@ -1,5 +1,6 @@
 package models.map;
 
+import enums.Direction;
 import models.structure.pair.ComparablePair;
 
 import java.awt.*;
@@ -74,9 +75,24 @@ public class Node extends ComparablePair<Integer, Integer> {
     public Point toPoint() {
         /**
          * @effects:
-         *          \result.x = \this.first;
-         *          \result.y = \this.second;
+         *          \result.x == \this.first;
+         *          \result.y == \this.second;
          */
         return new Point(this.getX(), this.getY());
+    }
+    
+    /**
+     * 坐标移动
+     *
+     * @param direction 移动方向
+     * @return 移动结果
+     */
+    public Node move(Direction direction) {
+        /**
+         * @effects:
+         *          \result.x == \this.x + direction.delta_x;
+         *          \result.y == \this.y + direction.delta_y;
+         */
+        return new Node(this.getX() + direction.getDeltaX(), this.getY() + direction.getDeltaY());
     }
 }

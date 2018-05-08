@@ -1,9 +1,11 @@
 package models.map;
 
-import exceptions.map.simple_map.NoSuchEdgeException;
+import configs.application.ApplicationConfig;
+import exceptions.map.NoEdgeException;
 import interfaces.block.BasicMapInterface;
 import models.application.ApplicationModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -128,19 +130,47 @@ public abstract class BasicMap extends ApplicationModel implements BasicMapInter
      *
      * @param e 边
      * @return 边权
-     * @throws NoSuchEdgeException 无此边
+     * @throws NoEdgeException 无此边
      */
-    public int getEdgeWeight(Edge e) throws NoSuchEdgeException {
+    public int getEdgeWeight(Edge e) throws NoEdgeException {
         /**
          * @effects:
          *          normal behavior:
          *          (Edge e contained in this map) ==> \result will be the weight of the queried edge;
-         *          !(Edge e contained in this map) ==> throw NoSuchEdgeException;
+         *          !(Edge e contained in this map) ==> throw NoEdgeException;
          *
          */
         if (!this.containsEdge(e) || !this.weight_map.containsKey(e)) {
-            throw new NoSuchEdgeException(e);
+            throw new NoEdgeException(e);
         }
         return this.weight_map.get(e);
+    }
+    
+    /**
+     * 判断图连通性
+     *
+     * @return 图连通性
+     */
+    public boolean isConnected() {
+        /**
+         * @effects:
+         *          \result == (whether this map contains all 6400 nodes and connected to each other);
+         */
+        Node source = new Node(0, 0);
+        ArrayList<Node> queue = new ArrayList<>();
+        queue.add(source);
+        HashSet<Node> set = new HashSet<>();
+        set.add(source);
+        while (!queue.isEmpty()) {
+            Node head = queue.get(0);
+            for (Node target : this.getTargets(head)) {
+                if (!set.contains(target)) {
+                    set.add(target);
+                    queue.add(target);
+                }
+            }
+            queue.remove(head);
+        }
+        return (set.size() == ApplicationConfig.MAX_NODE_COUNT);
     }
 }

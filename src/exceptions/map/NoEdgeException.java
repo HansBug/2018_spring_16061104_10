@@ -1,11 +1,12 @@
-package exceptions.map.simple_map;
+package exceptions.map;
 
+import exceptions.map.MapException;
 import models.map.Edge;
 
 /**
  * 无边异常
  */
-public class NoSuchEdgeException extends SimpleMapException {
+public class NoEdgeException extends MapException {
     /**
      * 边
      */
@@ -16,7 +17,7 @@ public class NoSuchEdgeException extends SimpleMapException {
      *
      * @param edge 边
      */
-    public NoSuchEdgeException(Edge edge) {
+    public NoEdgeException(Edge edge) {
         /**
          * @modifies:
          *          \this.edge;

@@ -66,4 +66,18 @@ public class Edge extends GenericPair<Node, Node> {
          */
         return new Edge(this.getTarget(), this.getSource());
     }
+    
+    /**
+     * 转化为字符串对象
+     *
+     * @return 字符串对象
+     */
+    @Override
+    public String toString() {
+        /**
+         * @effects:
+         *          \result will be the format of (source) --> (target);
+         */
+        return String.format("%s --> %s", this.getSource(), this.getTarget());
+    }
 }

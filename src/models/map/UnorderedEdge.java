@@ -53,20 +53,6 @@ public class UnorderedEdge extends UnorderedPair<Node> {
     }
     
     /**
-     * 转换为字符串对象
-     *
-     * @return 字符串对象
-     */
-    @Override
-    public String toString() {
-        /**
-         * @effects:
-         *          \result = "first <--> second"
-         */
-        return String.format("%s <--> %s", this.getFirst(), this.getSecond());
-    }
-    
-    /**
      * 获取原版Edge
      *
      * @return 原版Edge
@@ -92,5 +78,19 @@ public class UnorderedEdge extends UnorderedPair<Node> {
          *          \result.target = \this.first;
          */
         return new Edge(this.getSecond(), this.getFirst());
+    }
+    
+    /**
+     * 转化为字符串对象
+     *
+     * @return 字符串对象
+     */
+    @Override
+    public String toString() {
+        /**
+         * @effects:
+         *          \result will be the format of (first) --> (second);
+         */
+        return String.format("%s <--> %s", this.getFirst(), this.getSecond());
     }
 }

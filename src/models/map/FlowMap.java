@@ -1,92 +1,28 @@
 package models.map;
 
-import exceptions.map.simple_map.NoSuchEdgeException;
+import exceptions.map.NoEdgeException;
 import interfaces.block.MapFlowInterface;
-import models.structure.pair.ComparablePair;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public abstract class FlowMap extends UnorderedMap implements MapFlowInterface {
+    /**
+     * 新增边（长度为1）
+     *
+     * @param edge 边
+     */
+    public void addEdge(Edge edge) {
+        this.addEdge(edge, 1);
+    }
     
     /**
-     * 边权和流量二元对类
+     * 新增边（长度为1，类型为无向边）
+     *
+     * @param edge 无向边
      */
-    public class BlockWeightAndFlow extends ComparablePair<Integer, Integer> {
-        /**
-         * 构造函数
-         *
-         * @param weight 边权
-         * @param flow   流量
-         */
-        public BlockWeightAndFlow(int weight, int flow) {
-            /**
-             * @modifies:
-             *          \this.first;
-             *          \this.second;
-             * @effects:
-             *          \this.first = weight;
-             *          \this.second = flow;
-             */
-            super(weight, flow);
-        }
-        
-        /**
-         * 构造函数（均初始化为0）
-         */
-        public BlockWeightAndFlow() {
-            /**
-             * @modifies:
-             *          \this.first;
-             *          \this.second;
-             * @effects:
-             *          \this.first = 0;
-             *          \this.second = 0;
-             */
-            super(0, 0);
-        }
-        
-        /**
-         * 获取边权
-         *
-         * @return 边权
-         */
-        public int getWeight() {
-            /**
-             * @effects:
-             *          \result = \this.first;
-             * @notice:
-             *          define \this.weight as \this.first;
-             */
-            return super.getFirst();
-        }
-        
-        /**
-         * 获取流量
-         *
-         * @return 流量
-         */
-        public int getFlow() {
-            /**
-             * @effects:
-             *          \result = \this.second;
-             * @notice:
-             *          define \this.flow as \this.second;
-             */
-            return super.getSecond();
-        }
-        
-        /**
-         * 对象相加
-         *
-         * @param o 另一个对象
-         * @return 相加结果
-         */
-        public BlockWeightAndFlow add(BlockWeightAndFlow o) {
-            /**
-             * @effects:
-             *          \result.weight = \this.weight + o.weight;
-             *          \result.flow = \this.flow + o.flow;
-             */
-            return new BlockWeightAndFlow(this.getWeight() + o.getWeight(), this.getFlow() + o.getFlow());
-        }
+    public void addEdge(UnorderedEdge edge) {
+        this.addEdge(edge, 1);
     }
     
     /**
@@ -94,15 +30,57 @@ public abstract class FlowMap extends UnorderedMap implements MapFlowInterface {
      *
      * @param edge 边
      * @return 信息对象
-     * @throws NoSuchEdgeException 该边不存在
+     * @throws NoEdgeException 该边不存在
      */
-    public BlockWeightAndFlow getEdgeInformation(Edge edge) throws NoSuchEdgeException {
+    public WeightFlow getEdgeInformation(Edge edge) throws NoEdgeException {
         /**
          * @effects:
          *          (this map contains this edge) ==> \result.weight = 1, \result.flow = \this.getEdgeFlow(e);
-         *          !(this map contains this edge) ==> throw NoSuchEdgeException;
+         *          !(this map contains this edge) ==> throw NoEdgeException;
          */
-        if (!this.containsEdge(edge)) throw new NoSuchEdgeException(edge);
-        return new BlockWeightAndFlow(this.getEdgeWeight(edge), this.getEdgeFlow(edge));
+        if (!this.containsEdge(edge)) throw new NoEdgeException(edge);
+        //return new WeightFlow(this.getEdgeWeight(edge), this.getEdgeFlow(edge));
+        return new WeightFlow(1, this.getEdgeFlow(edge));  // 骚操作 is here
     }
+    
+    /**
+     * 获取最短路数据对象
+     *
+     * @param source 出发点
+     * @return 最短路数据对象
+     */
+    public PathResultModule getShortestPath(Node source) {
+        /**
+         * @effects:
+         *          \result will be set to the result of the shortest path data set of variable "target_node";
+         */
+        PathResultModule result = new PathResultModule(source);
+        ArrayList<Node> queue = new ArrayList<>();
+        queue.add(source);
+        HashSet<Node> set = new HashSet<>();
+        set.add(source);
+        
+        while (!queue.isEmpty()) {
+            Node head = queue.get(0);
+            WeightFlow current = result.getSourceInformation(head);
+            for (Node target : this.getTargets(head)) {
+                try {
+                    WeightFlow current_target = current.add(this.getEdgeInformation(new Edge(head, target)));
+                    if (!result.containsTargetNode(target) || (current_target.compareTo(result.getSourceInformation(target)) < 0)) {
+                        result.setSourceInformation(target, head, current_target);
+                        if (!set.contains(target)) {
+                            set.add(target);
+                            queue.add(target);
+                        }
+                    }
+                } catch (NoEdgeException e) {
+                
+                }
+            }
+            queue.remove(0);
+            set.remove(head);
+        }
+        return result;
+    }
+    
 }

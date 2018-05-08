@@ -1,10 +1,8 @@
 package interfaces.block;
 
-import exceptions.map.simple_map.NoSuchEdgeException;
+import exceptions.map.NoEdgeException;
 import interfaces.application.ApplicationInterface;
 import models.map.Edge;
-import models.map.Node;
-import models.structure.pair.GenericPair;
 
 /**
  * 基本地图类接口
@@ -16,7 +14,7 @@ public interface BasicMapInterface extends ApplicationInterface {
      * @param edge 边
      * @return 边权
      */
-    int getEdgeWeight(Edge edge) throws NoSuchEdgeException;
+    int getEdgeWeight(Edge edge) throws NoEdgeException;
     
     /**
      * 判断边是否存在
