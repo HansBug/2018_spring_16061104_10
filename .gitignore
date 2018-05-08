@@ -2,5 +2,6 @@
 *.classpath
 *.project
 /.idea
-/2018_spring_16061104_9.iml
+*.iml
 .gitignore
+/out
