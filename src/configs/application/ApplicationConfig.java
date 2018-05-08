@@ -22,4 +22,19 @@ public abstract class ApplicationConfig implements ApplicationInterface {
      * 系统换行符
      */
     public static final String BREAK_LINE = System.getProperty("line.separator");
+    
+    
+    /**
+     * X坐标界限
+     */
+    public static final int MIN_X_VALUE = 0;
+    public static final int X_COUNT = 80;
+    public static final int MAX_X_VALUE = MIN_X_VALUE + X_COUNT - 1;
+    
+    /**
+     * Y坐标界限
+     */
+    public static final int MIN_Y_VALUE = 0;
+    public static final int Y_COUNT = 80;
+    public static final int MAX_Y_VALUE = MIN_Y_VALUE + Y_COUNT - 1;
 }
