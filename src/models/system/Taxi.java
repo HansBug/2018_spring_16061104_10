@@ -3,6 +3,7 @@ package models.system;
 import enums.TaxiStatus;
 import events.thread.ThreadExceptionEvent;
 import helpers.application.ApplicationHelper;
+import helpers.log.LogHelper;
 import helpers.map.MapHelper;
 import interfaces.system.TaxiInterface;
 import models.map.Edge;
@@ -324,6 +325,7 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
             }
         } else if (this.status == TaxiStatus.STOPPED) {
             timestamp = timestamp.getOffseted(TAXI_STOP_TIME);
+            LogHelper.append(String.format("Taxi No.%s sleep for a while.", this.id));
             sleepUntil(timestamp);
             this.status = TaxiStatus.FREE;
             this.free_count = 0;
@@ -334,6 +336,7 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
             for (Node node : path) {
                 if (!this.map.containsEdge(new Edge(this.position, node))) break;  // 边被阻断
                 this.walkBy(new Edge(this.position, node));
+                LogHelper.append(String.format("Taxi No.%s run from %s to %s.", this.getTaxiId(), this.position, node));
                 timestamp = timestamp.getOffseted(TAXI_RUN_TIME);
                 sleepUntil(timestamp);
                 this.position = node;
@@ -345,11 +348,13 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
                     this.status = TaxiStatus.IN_SERVICE;
                     this.target = this.request.getTarget();
                     System.out.println(String.format("Taxi No.%s arrive at the position of the customer %s of ticket %s.", this.getTaxiId(), this.position, request));
+                    LogHelper.append(String.format("Taxi No.%s arrive at the position of the customer %s of ticket %s.", this.getTaxiId(), this.position, request));
                 } else if (this.status == TaxiStatus.IN_SERVICE) {  // 顾客到达目的地
                     this.status = TaxiStatus.STOPPED;
                     this.target = null;
                     this.credit += CREDIT_ARRIVE_DELTA;
                     System.out.println(String.format("Taxi No.%s arrive at the position of the target %s of ticket %s.", this.getTaxiId(), this.position, request));
+                    LogHelper.append(String.format("Taxi No.%s arrive at the position of the target %s of ticket %s.", this.getTaxiId(), this.position, request));
                 }
             }
         }

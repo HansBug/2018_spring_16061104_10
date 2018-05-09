@@ -11,12 +11,12 @@ import models.parse.regex.SingleRegexParser;
 import models.system.Taxi;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 /**
  * 设置出租车位置请求
  */
-public class SetTaxiRequest {
+public class SetTaxiRequest extends InteractiveSystemRequest {
     /**
      * 出租车位置
      */

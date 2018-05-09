@@ -4,7 +4,6 @@ import exceptions.data.user.InvalidNodeException;
 import exceptions.parser.ParserException;
 import exceptions.parser.UnableToParseException;
 import models.map.Edge;
-import models.map.FlowMap;
 import models.map.MapFlow;
 import models.map.Node;
 import models.parse.basic.IntegerParser;

@@ -7,8 +7,6 @@ import helpers.application.ApplicationHelper;
 import interfaces.system.TaxiSystemInterface;
 import models.map.Edge;
 import models.map.FlowMap;
-import models.map.Node;
-import models.request.InteractiveSystemRequest;
 import models.request.TaxiRequest;
 import models.structure.pair.ComparablePair;
 import models.thread.circulation.SimpleCirculationThread;

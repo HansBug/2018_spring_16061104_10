@@ -6,6 +6,7 @@ import exceptions.data.user.InvalidNodeException;
 import exceptions.io.MapIncompleteException;
 import exceptions.map.MapNotConnectedException;
 import exceptions.parser.ParserException;
+import helpers.log.LogHelper;
 import helpers.map.MapHelper;
 import models.map.*;
 import models.request.*;
@@ -44,9 +45,18 @@ public abstract class Main {
         }
     };
     private static final FlowMap map = new FlowMap() {
+        /**
+         * 读取流量
+         * @param edge 无向边
+         * @return 流量
+         */
         @Override
-        public int getEdgeFlow(Edge e) {
-            return flow.getFlow(e);
+        public int getEdgeFlow(Edge edge) {
+            /**
+             * @effects:
+             *          \result will be the flow of the edge e in flow;
+             */
+            return flow.getFlow(edge);
         }
     };
     private static final TaxiSystem system = new TaxiSystem(map, ApplicationConfig.TAXI_COUNT) {
@@ -64,6 +74,7 @@ public abstract class Main {
              *          the value of the edge in flow will be increased by 1;
              */
             flow.addFlow(edge, 1);
+            
         }
         
         /**
@@ -72,6 +83,10 @@ public abstract class Main {
          */
         @Override
         public void allocTaxiFailed(TaxiRequest request) {
+            /**
+             * @effects:
+             *          None;
+             */
             System.out.println(String.format("Request alloc failed - \"%s\".", request));
         }
         
@@ -81,6 +96,10 @@ public abstract class Main {
          */
         @Override
         public void duplicatedTaxiRequest(TaxiRequest request) {
+            /**
+             * @effects:
+             *          None;
+             */
             System.out.println(String.format("Duplicated request - \"%s\".", request));
         }
         
@@ -91,6 +110,12 @@ public abstract class Main {
          */
         @Override
         public void setRoadStatus(Edge edge, int status) {
+            /**
+             * @modifies:
+             *          gui;
+             * @effects:
+             *          the edge's status in gui will be changed;
+             */
             gui.setRoadStatus(edge, status);
         }
     };
@@ -104,6 +129,10 @@ public abstract class Main {
      * @throws Throwable 任意异常类
      */
     public static void main(String[] args) throws Throwable {
+        /**
+         * @effects:
+         *          None(maybe everything will be the same as the time before it happened ?)
+         */
         try {
             initialize();
             prepare();
@@ -112,8 +141,8 @@ public abstract class Main {
             quit();
         } catch (Throwable e) {
             // TODO : 写完记得换上System.out
-//            e.printStackTrace(System.out);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
+//            e.printStackTrace();
         }
     }
     
@@ -135,24 +164,29 @@ public abstract class Main {
      * 数据准备
      */
     private static void prepare() throws Throwable {
+        /**
+         * @effects:
+         *          the map data will be validated;
+         *          the pre-load file will be loaded;
+         */
         dataValidation();
         preLoadFile();
-//        for (int i = 0; i < 100; i++) {
-////        SetTaxiRequest r = SetTaxiRequest.parse(String.format("No.%s STOPPED 10 (1,1 )", 1));
-////        r.apply(system.getTaxiById(r.getTaxiId()));
-//            try {
-//                SetTaxiWorkingRequest rr = SetTaxiWorkingRequest.parse(String.format("No.%s GOING_TO_SERVICE [CR, %s, %s]", i, MapHelper.getRandomNode(), MapHelper.getRandomNode()));
-//                rr.apply(system.getTaxiById(rr.getTaxiId()));
-//            } catch (Throwable e) {
-//                continue;
-//            }
-//        }
     }
     
     /**
      * 程序开始，线程启动
      */
     private static void start() throws InterruptedException {
+        /**
+         * @modifies:
+         *          flow_map_switch;
+         *          gui;
+         *          system;
+         * @effects:
+         *          flow_map_switch will be started;
+         *          gui will be started;
+         *          system will be started and the requests will be pushed into it at one time;
+         */
         flow_map_switch.start();
         gui.start();
         system.start();
@@ -165,6 +199,10 @@ public abstract class Main {
      * 程序中场交互
      */
     private static void interactive() throws InterruptedException {
+        /**
+         * @effects:
+         *          data will be interacted in the method;
+         */
         while (stdin.hasNextLine()) {
             String line = stdin.nextLine();
             boolean success = false;
@@ -219,6 +257,14 @@ public abstract class Main {
      * @throws InterruptedException 异常终端
      */
     public static void quit() throws InterruptedException {
+        /**
+         * @modifies:
+         *          gui;
+         *          system;
+         *          flow_map_switch;
+         * @effects:
+         *          gui, system, flow_map_switch will be exited gracefully;
+         */
         System.out.println("Gracefully shutting down the system...");
         gui.exitGracefully();
         system.exitGracefully();
