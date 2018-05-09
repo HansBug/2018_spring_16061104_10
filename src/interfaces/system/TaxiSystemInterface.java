@@ -2,17 +2,19 @@ package interfaces.system;
 
 import models.map.Edge;
 import models.request.TaxiRequest;
+import models.system.Taxi;
 
 /**
  * 出租车系统接口
  */
 public interface TaxiSystemInterface {
     /**
-     * 经过边
+     * 出租车经过边
      *
+     * @param taxi 出租车
      * @param edge 经过边
      */
-    void walkBy(Edge edge);
+    void taxiWalkBy(Taxi taxi, Edge edge);
     
     /**
      * 出租车分配失败

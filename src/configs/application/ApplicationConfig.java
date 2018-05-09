@@ -27,6 +27,10 @@ public abstract class ApplicationConfig implements ApplicationInterface {
      */
     public static final String BREAK_LINE = System.getProperty("line.separator");
     
+    /**
+     * 出租车数量
+     */
+    public static final int TAXI_COUNT = 100;
     
     /**
      * X坐标界限

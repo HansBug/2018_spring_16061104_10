@@ -31,19 +31,54 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
     private final ConcurrentHashMap<TaxiRequest, HashSet<Taxi>> windows;
     
     /**
+     * 地图
+     */
+    private final FlowMap map;
+    
+    /**
      * 构造函数
      *
      * @param map        地图
      * @param taxi_count 出租车数量
      */
     public TaxiSystem(FlowMap map, int taxi_count) {
+        /**
+         * @modifies:
+         *          \this.windows;
+         *          \this.taxis;
+         *          \this.map;
+         * @effects:
+         *          \this.map == map;
+         *          \this.windows will be initialized to a new empty concurrent hash map;
+         *          \this.taxis will be initialized to a new concurrent hash map with new taxis;
+         */
+        this.map = map;
         this.windows = new ConcurrentHashMap<>();
         this.taxis = new HashMap<>();
         for (int i = 0; i < taxi_count; i++) {
             Taxi taxi = new Taxi(i, map) {
+                /**
+                 * 途径变化
+                 * @param edge 经过边
+                 */
                 @Override
                 public void walkBy(Edge edge) {
-                    this.walkBy(edge);
+                    /**
+                     * @modifies:
+                     *          windows;
+                     * @effects:
+                     *          taxiWalkBy will be triggered;
+                     *          windows will be refreshed;
+                     */
+                    taxiWalkBy(this, edge);
+                    for (Map.Entry<TaxiRequest, HashSet<Taxi>> entry : windows.entrySet()) {
+                        if (entry.getKey().getSource().isNear(this.getPosition())) {
+                            if (!entry.getValue().contains(this)) {
+                                entry.getValue().add(this);
+                                this.addCredit();
+                            }
+                        }
+                    }
                 }
             };
             taxis.put(i, taxi);
@@ -61,6 +96,19 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
          *          (\ exists Taxi taxi ; taxi.id = = id) ==> \result == taxi;
          */
         return this.taxis.get(id);
+    }
+    
+    /**
+     * 获取出租车列表
+     *
+     * @return 出租车列表
+     */
+    public HashMap<Integer, Taxi> getTaxis() {
+        /**
+         * @effects:
+         *          \result == \this.taxis;
+         */
+        return this.taxis;
     }
     
     /**
@@ -103,6 +151,19 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
     }
     
     /**
+     * 获取地图
+     *
+     * @return 地图
+     */
+    public FlowMap getMap() {
+        /**
+         * @effects:
+         *          \result == \this.map;
+         */
+        return map;
+    }
+    
+    /**
      * 布置请求
      *
      * @param request 请求
@@ -130,8 +191,18 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
                             array.add(new CreditRandomTaxi(taxi));
                         }
                         array.sort(new Comparator<CreditRandomTaxi>() {
+                            /**
+                             * 比对函数
+                             * @param o1 对象1
+                             * @param o2 对象2
+                             * @return 比对结果
+                             */
                             @Override
                             public int compare(CreditRandomTaxi o1, CreditRandomTaxi o2) {
+                                /**
+                                 * @effects:
+                                 *          \result == -(o1 <=> o2);
+                                 */
                                 return -o1.compareTo(o2);
                             }
                         });

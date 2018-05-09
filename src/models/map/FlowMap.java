@@ -1,5 +1,8 @@
 package models.map;
 
+import configs.application.ApplicationConfig;
+import enums.Direction;
+import enums.MapEdgeMode;
 import exceptions.map.NoEdgeException;
 import interfaces.block.MapFlowInterface;
 
@@ -83,4 +86,25 @@ public abstract class FlowMap extends UnorderedMap implements MapFlowInterface {
         return result;
     }
     
+    /**
+     * 将路网信息导出到数组
+     *
+     * @return 导出到数组
+     */
+    public int[][] toArray() {
+        /**
+         * @effects:
+         *          \result will be set to map array of this FlowMap;
+         */
+        int[][] result = new int[ApplicationConfig.X_COUNT][ApplicationConfig.Y_COUNT];
+        for (int i = ApplicationConfig.MIN_X_VALUE; i <= ApplicationConfig.MAX_X_VALUE; i++) {
+            for (int j = ApplicationConfig.MIN_Y_VALUE; j <= ApplicationConfig.MAX_Y_VALUE; j++) {
+                Node current = new Node(i, j);
+                Node right = current.move(Direction.RIGHT);
+                Node down = current.move(Direction.DOWN);
+                result[i][j] = MapEdgeMode.valueOf(this.containsEdge(new Edge(current, right)), this.containsEdge(new Edge(current, down))).getValue();
+            }
+        }
+        return result;
+    }
 }

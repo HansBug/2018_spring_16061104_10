@@ -27,44 +27,51 @@ import static enums.TaxiStatus.STOPPED;
  */
 public abstract class Taxi extends SimpleCirculationThread implements TaxiInterface {
     /**
+     * 常数项
+     */
+    private static final long TAXI_RUN_TIME = 500;
+    private static final long TAXI_STOP_TIME = 1000;
+    private static final long CREDIT_ADD_DELTA = 1;
+    private static final long CREDIT_ARRIVE_DELTA = 3;
+    private static final long MAX_FREE_COUNT = 20;
+    
+    /**
      * 编号
      */
     private final int id;
-    
     /**
      * 流量图
      */
     private final FlowMap map;
-    
     /**
      * 位置信息
      */
     private Node position;
-    
     /**
      * 状态信息
      */
     private TaxiStatus status;
-    
     /**
      * 请求信息
      */
     private TaxiRequest request;
-    
     /**
      * 运动目标
      */
     private Node target;
-    
     /**
      * 请求
      */
     private int credit;
-    
     /**
      * 时间戳
      */
     private Timestamp timestamp;
+    
+    /**
+     * 自由行动时间
+     */
+    private int free_count = 0;
     
     /**
      * 默认构造函数
@@ -101,19 +108,6 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
     }
     
     /**
-     * 设置位置
-     *
-     * @param node 设置位置
-     */
-    public void setPosition(Node node) {
-        /**
-         * @effects:
-         *          \this.position == node;
-         */
-        this.position = node;
-    }
-    
-    /**
      * 设置出租车状态
      *
      * @param status  状态
@@ -144,6 +138,19 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
     }
     
     /**
+     * 获取信用度
+     *
+     * @return 信用度
+     */
+    public int getCredit() {
+        /**
+         * @effects:
+         *          \result == \this.credit;
+         */
+        return this.credit;
+    }
+    
+    /**
      * 设置信用度
      *
      * @param credit 信用度
@@ -156,19 +163,6 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
          *          \this.credit == credit;
          */
         this.credit = credit;
-    }
-    
-    /**
-     * 获取信用度
-     *
-     * @return 信用度
-     */
-    public int getCredit() {
-        /**
-         * @effects:
-         *          \result == \this.credit;
-         */
-        return this.credit;
     }
     
     /**
@@ -201,15 +195,6 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
     }
     
     /**
-     * 常数项
-     */
-    private static final long TAXI_RUN_TIME = 500;
-    private static final long TAXI_STOP_TIME = 1000;
-    
-    private static final long CREDIT_ADD_DELTA = 1;
-    private static final long CREDIT_ARRIVE_DELTA = 3;
-    
-    /**
      * 获取刷新间隔
      * 随机数，用于在数据量较大时错峰
      *
@@ -224,47 +209,42 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
     }
     
     /**
-     * 排序单元
+     * 获取位置
+     *
+     * @return 位置
      */
-    private class FlowRandomTarget extends ComparablePair<Integer, Integer> {
+    public Node getPosition() {
         /**
-         * 目标点
+         * @effects:
+         *          \result == \this.position;
          */
-        private final Node target;
-        
+        return position;
+    }
+    
+    /**
+     * 设置位置
+     *
+     * @param node 设置位置
+     */
+    public void setPosition(Node node) {
         /**
-         * 构造函数
-         *
-         * @param flow   流量
-         * @param target 目标点
+         * @effects:
+         *          \this.position == node;
          */
-        public FlowRandomTarget(int flow, Node target) {
-            /**
-             * @modifies:
-             *          \super.first;
-             *          \super.second;
-             *          \this.target;
-             * @effects:
-             *          \super.first == flow;
-             *          \super.second will be set as a new random integer;
-             *          \this.target == target;
-             */
-            super(flow, ApplicationHelper.getRandom().nextInt());
-            this.target = target;
-        }
-        
+        this.position = node;
+    }
+    
+    /**
+     * 获取出租车状态
+     *
+     * @return 状态
+     */
+    public TaxiStatus getStatus() {
         /**
-         * 获取目标点
-         *
-         * @return 目标点
+         * @effects:
+         *          \result == \this.status;
          */
-        public Node getTarget() {
-            /**
-             * @effects:
-             *          \result == \this.target;
-             */
-            return target;
-        }
+        return status;
     }
     
     /**
@@ -319,18 +299,33 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
         return array.get(0).getTarget();
     }
     
+    /**
+     * 循环体
+     *
+     * @throws Throwable 任意异常类
+     */
     @Override
     public void circulation() throws Throwable {
+        /**
+         * @effects:
+         *          Taxi \this will move as the program setted;
+         */
         if (this.status == FREE) {
             Node target = getMoveRandomly();
             this.walkBy(new Edge(this.position, target));
             timestamp = timestamp.getOffseted(TAXI_RUN_TIME);
             sleepUntil(timestamp);
             this.position = target;
+            this.free_count += 1;
+            if (this.free_count >= MAX_FREE_COUNT) {
+                this.free_count = 0;
+                this.status = STOPPED;
+            }
         } else if (this.status == TaxiStatus.STOPPED) {
             timestamp = timestamp.getOffseted(TAXI_STOP_TIME);
             sleepUntil(timestamp);
             this.status = TaxiStatus.FREE;
+            this.free_count = 0;
         } else if (this.status.isBusy()) {
             PathResult path = this.map.getShortestPath(this.position).getShortestPath(this.target);
             int count = 0;
@@ -380,5 +375,62 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
          *          None;
          */
         e.getThrowable().printStackTrace();
+    }
+    
+    /**
+     * 排序单元
+     */
+    private class FlowRandomTarget extends ComparablePair<Integer, Integer> {
+        /**
+         * 目标点
+         */
+        private final Node target;
+        
+        /**
+         * 构造函数
+         *
+         * @param flow   流量
+         * @param target 目标点
+         */
+        public FlowRandomTarget(int flow, Node target) {
+            /**
+             * @modifies:
+             *          \super.first;
+             *          \super.second;
+             *          \this.target;
+             * @effects:
+             *          \super.first == flow;
+             *          \super.second will be set as a new random integer;
+             *          \this.target == target;
+             */
+            super(flow, ApplicationHelper.getRandom().nextInt());
+            this.target = target;
+        }
+        
+        /**
+         * 获取目标点
+         *
+         * @return 目标点
+         */
+        public Node getTarget() {
+            /**
+             * @effects:
+             *          \result == \this.target;
+             */
+            return target;
+        }
+        
+        /**
+         * 获取流量
+         *
+         * @return 流量
+         */
+        public int getFlow() {
+            /**
+             * @effects:
+             *          \result == \this.flow;
+             */
+            return this.getFirst();
+        }
     }
 }

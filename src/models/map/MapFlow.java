@@ -58,6 +58,7 @@ public class MapFlow extends ApplicationModel {
          */
         synchronized (this.flow_map) {
             this.flow_map.put(edge, flow);
+            this.flow_map.put(edge.getReversed(), flow);
         }
     }
     
@@ -75,7 +76,7 @@ public class MapFlow extends ApplicationModel {
          *          the flow of the edge e will be added by the value of variable "add_flow";
          */
         synchronized (this.flow_map) {
-            this.flow_map.put(edge, this.getFlow(edge) + add_flow);
+            this.setFlow(edge, this.flow_map.getOrDefault(edge, 0) + add_flow);
         }
     }
     
