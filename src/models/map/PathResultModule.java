@@ -1,6 +1,5 @@
 package models.map;
 
-
 import exceptions.map.NoPathException;
 
 import java.util.ArrayList;

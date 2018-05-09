@@ -5,7 +5,6 @@ import enums.Direction;
 import exceptions.data.data.InvalidDataException;
 import exceptions.data.data.InvalidDataPropertyException;
 import exceptions.data.property.InvalidPropertyException;
-import javafx.application.Application;
 import models.structure.pair.ComparablePair;
 
 import java.awt.*;
