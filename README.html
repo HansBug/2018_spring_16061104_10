@@ -476,8 +476,9 @@ No.98 IN_SERVICE [CR, (1, 2), (39, 79)]
 <li>
 控制台将针对控制台输入的查询请求作即时回复
 <ul>
-<li>对于<code>QUERY_TAXI</code>，将输出<strong>出租车实时的状态信息</strong>（编号、信用积累、位置、状态）</li>
-<li>对于<code>QUERY_STATUS</code>，将输出<strong>该状态出租车的查询结果</strong>（查询状态、结果数、符合条件的出租车编号） </li>
+<li>对于<code>query_taxi</code>，将输出<strong>出租车实时的状态信息</strong>（编号、信用积累、位置、状态）</li>
+<li>对于<code>query_taxi_by_status</code>，将输出<strong>该状态出租车的查询结果</strong>（查询状态、结果数、符合条件的出租车编号） </li>
+<li>对于<code>set_road</code>，将<strong>输出操作是否成功</strong>（只要两个点均合法即可成功，无论原先边状态如何）</li>
 </ul>
 </li>
 <li>

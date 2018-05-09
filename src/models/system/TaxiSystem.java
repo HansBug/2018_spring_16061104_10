@@ -4,6 +4,7 @@ import enums.TaxiStatus;
 import events.thread.ThreadExceptionEvent;
 import events.thread.ThreadTriggerWithReturnValueEvent;
 import helpers.application.ApplicationHelper;
+import helpers.log.LogHelper;
 import interfaces.system.TaxiSystemInterface;
 import models.map.Edge;
 import models.map.FlowMap;
@@ -76,6 +77,7 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
                     for (Map.Entry<TaxiRequest, HashSet<Taxi>> entry : windows.entrySet()) {
                         if (entry.getKey().getSource().isNear(this.getPosition())) {
                             if (!entry.getValue().contains(this)) {
+                                LogHelper.append(String.format("Taxi No.%s(credit: %s) enter the windows of request %s.", this.getTaxiId(), this.getCredit(), entry.getKey()));
                                 entry.getValue().add(this);
                                 this.addCredit();
                             }
@@ -247,6 +249,7 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
                         for (CreditRandomTaxi taxi_con : array) {
                             Taxi taxi = taxi_con.getTaxi();
                             if (taxi.getStatus().isAvailable()) {
+                                LogHelper.append(String.format("Request %s is allocated to Taxi No.%s(credit: %s)", request, taxi.getTaxiId(), taxi.getCredit()));
                                 taxi.putRequest(request);
                                 success = true;
                                 break;
