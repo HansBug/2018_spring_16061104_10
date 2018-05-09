@@ -206,8 +206,13 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
                                 return -o1.compareTo(o2);
                             }
                         });
-                        Taxi taxi = array.get(0).getTaxi();
-                        taxi.putRequest(request);
+                        for (CreditRandomTaxi taxi_con : array) {
+                            Taxi taxi = taxi_con.getTaxi();
+                            if (taxi.getStatus().isAvailable()) {
+                                taxi.putRequest(request);
+                                break;
+                            }
+                        }
                     }
                 }
                 

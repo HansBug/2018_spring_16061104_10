@@ -6,11 +6,9 @@ import exceptions.data.user.InvalidNodeException;
 import exceptions.io.MapIncompleteException;
 import exceptions.map.MapNotConnectedException;
 import exceptions.parser.ParserException;
+import helpers.map.MapHelper;
 import models.map.*;
-import models.request.LoadFileRequest;
-import models.request.SetTaxiRequest;
-import models.request.SystemRequest;
-import models.request.TaxiRequest;
+import models.request.*;
 import models.system.Taxi;
 import models.system.TaxiSystem;
 import models.system.TaxiSystemGUI;
@@ -19,6 +17,7 @@ import models.thread.circulation.TimerThread;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -43,13 +42,13 @@ public abstract class Main {
             flow.switchMap();
         }
     };
-    private static FlowMap map = new FlowMap() {
+    private static final FlowMap map = new FlowMap() {
         @Override
         public int getEdgeFlow(Edge e) {
             return flow.getFlow(e);
         }
     };
-    private static TaxiSystem system = new TaxiSystem(map, ApplicationConfig.TAXI_COUNT) {
+    private static final TaxiSystem system = new TaxiSystem(map, ApplicationConfig.TAXI_COUNT) {
         /**
          * 出租车经过
          * @param taxi 出租车
@@ -84,7 +83,8 @@ public abstract class Main {
             System.out.println(String.format("Duplicated request - \"%s\".", request));
         }
     };
-    private static TaxiSystemGUI gui = new TaxiSystemGUI(system);
+    private static final TaxiSystemGUI gui = new TaxiSystemGUI(system);
+    private static final ArrayList<TaxiRequest> taxi_pre_requests = new ArrayList<>();
     
     /**
      * 主程序
@@ -125,11 +125,17 @@ public abstract class Main {
      */
     private static void prepare() throws Throwable {
         dataValidation();
-        
-        for (int i = 0; i < 100; i++) {
-            SetTaxiRequest r = SetTaxiRequest.parse(String.format("No.%s STOPPED 10 (1,1 )", i));
-            r.apply(system.getTaxiById(i));
-        }
+        preLoadFile();
+//        for (int i = 0; i < 100; i++) {
+////        SetTaxiRequest r = SetTaxiRequest.parse(String.format("No.%s STOPPED 10 (1,1 )", 1));
+////        r.apply(system.getTaxiById(r.getTaxiId()));
+//            try {
+//                SetTaxiWorkingRequest rr = SetTaxiWorkingRequest.parse(String.format("No.%s GOING_TO_SERVICE [CR, %s, %s]", i, MapHelper.getRandomNode(), MapHelper.getRandomNode()));
+//                rr.apply(system.getTaxiById(rr.getTaxiId()));
+//            } catch (Throwable e) {
+//                continue;
+//            }
+//        }
     }
     
     /**
@@ -139,6 +145,9 @@ public abstract class Main {
         flow_map_switch.start();
         gui.start();
         system.start();
+        for (TaxiRequest request : taxi_pre_requests) {
+            system.putRequest(request);
+        }
     }
     
     /**
@@ -237,7 +246,12 @@ public abstract class Main {
      * @throws Throwable 任意异常类
      */
     private static void preLoadFile() throws Throwable {
+        /**
+         * @effects:
+         *          Import file;
+         */
         System.out.println("Preparing for pre-data...");
+        System.out.println("Please input a line of load_file instruction.");
         String line = stdin.nextLine();
         LoadFileRequest request;
         try {
@@ -246,7 +260,8 @@ public abstract class Main {
             System.out.println("Unrecognized instruction.");
             return;
         }
-        
+        loadFile(request);
+        System.out.println("File load completed!");
     }
     
     /**
@@ -255,10 +270,52 @@ public abstract class Main {
      * @param request 文件加载请求
      */
     private static void loadFile(LoadFileRequest request) {
+        /**
+         * @modifies:
+         *          map;
+         *          flow;
+         *          taxi_pre_requests;
+         * @effects:
+         *          settings in file will be applied to map, flow and taxi_pre_requests;
+         */
         Scanner sc = null;
         try {
             sc = new Scanner(new FileInputStream(new File(request.getFilename())));
-            
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                boolean accepted = false;
+                try {
+                    SetTaxiRequest r = SetTaxiRequest.parse(line);
+                    r.apply(system.getTaxiById(r.getTaxiId()));
+                    accepted = true;
+                } catch (ParserException e) {
+                }
+                
+                try {
+                    SetTaxiWorkingRequest r = SetTaxiWorkingRequest.parse(line);
+                    r.apply(system.getTaxiById(r.getTaxiId()));
+                    accepted = true;
+                } catch (ParserException e) {
+                }
+                
+                try {
+                    SetEdgeFlowRequest r = SetEdgeFlowRequest.parse(line);
+                    r.apply(flow);
+                    accepted = true;
+                } catch (ParserException e) {
+                }
+                
+                try {
+                    TaxiRequest r = TaxiRequest.valueOf(line);
+                    taxi_pre_requests.add(r);
+                    accepted = true;
+                } catch (ParserException e) {
+                }
+                
+                if (accepted) {
+                    System.out.println(String.format("\"%s\" accepted!", line));
+                }
+            }
         } catch (Throwable e) {
             if (sc != null) sc.close();
             System.out.println(String.format("Error occurred when loading file - \"%s\"", e.getMessage()));

@@ -126,6 +126,13 @@ public class SetTaxiRequest {
          */
         @Override
         public SetTaxiRequest getParseResult(Matcher matcher, String str) throws ParserException {
+            /**
+             * @effects:
+             *          \result.taxi_id == id;
+             *          \result.status == status;
+             *          \result.credit == credit;
+             *          \result.position == new Node(x1, y1);
+             */
             try {
                 int taxi_id = (new IntegerParser()).parse(matcher.group("id"));
                 String status_str = matcher.group("status").toUpperCase().replace("-", "_");
