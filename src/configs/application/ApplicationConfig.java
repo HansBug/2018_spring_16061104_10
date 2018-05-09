@@ -59,7 +59,7 @@ public abstract class ApplicationConfig implements ApplicationInterface {
              *              (Node value out of range) ==> throw InvalidNodeException;
              *
              */
-            if (((value.getX() > MAX_X_VALUE) || (value.getX() < MIN_X_VALUE)) && ((value.getY() > MAX_Y_VALUE) || (value.getY() < MIN_Y_VALUE))) {
+            if (((value.getX() > MAX_X_VALUE) || (value.getX() < MIN_X_VALUE)) || ((value.getY() > MAX_Y_VALUE) || (value.getY() < MIN_Y_VALUE))) {
                 throw new InvalidNodeException(value);
             }
         }

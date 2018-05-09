@@ -1,6 +1,11 @@
 package models.map;
 
+import configs.application.ApplicationConfig;
 import enums.Direction;
+import exceptions.data.data.InvalidDataException;
+import exceptions.data.data.InvalidDataPropertyException;
+import exceptions.data.property.InvalidPropertyException;
+import javafx.application.Application;
 import models.structure.pair.ComparablePair;
 
 import java.awt.*;
@@ -94,5 +99,41 @@ public class Node extends ComparablePair<Integer, Integer> {
          *          \result.y == \this.y + direction.delta_y;
          */
         return new Node(this.getX() + direction.getDeltaX(), this.getY() + direction.getDeltaY());
+    }
+    
+    /**
+     * 检测是否合法
+     *
+     * @return 是否合法
+     */
+    public boolean isValid() {
+        /**
+         * @effects:
+         *          normal behavior:
+         *              \this will be validated by Application.NODE_VALIDATOR;
+         *              \result = true;
+         *          exceptional behavior(InvalidPropertyException):
+         *              \result == false;
+         */
+        try {
+            ApplicationConfig.NODE_VALIDATOR.validate(this);
+            return true;
+        } catch (InvalidPropertyException e) {
+            return false;
+        }
+    }
+    
+    /**
+     * 点相邻
+     *
+     * @param node 另一个点
+     * @return 相邻
+     */
+    public boolean isNear(Node node) {
+        /**
+         * @effects:
+         *          \result == (\max(\abs(\this.x - node.x), \abs(\this.y - node.y)) <= 2);
+         */
+        return Math.max(Math.abs(this.getX() - node.getX()), Math.abs(this.getY() - node.getY())) <= 2;
     }
 }

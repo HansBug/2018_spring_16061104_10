@@ -3,8 +3,11 @@ import enums.Direction;
 import enums.MapEdgeMode;
 import events.thread.ThreadTriggerEvent;
 import exceptions.application.ApplicationException;
+import exceptions.data.user.InvalidNodeException;
 import exceptions.io.MapIncompleteException;
 import models.map.*;
+import models.request.TaxiRequest;
+import models.system.Taxi;
 import models.thread.circulation.TimerThread;
 import models.time.Timestamp;
 
@@ -50,15 +53,17 @@ public abstract class Main {
      * @throws Throwable 任意异常类
      */
     public static void main(String[] args) throws Throwable {
+        
         try {
             initialize();
-
+            System.out.println(map.isConnected());
 
 //        initialize();
 //        prepare();
 //        start();
 //        interactive();
 //        quit();
+        
         
         } catch (Throwable e) {
             // TODO : 写完记得换上System.out
@@ -129,15 +134,22 @@ public abstract class Main {
         try {
             sc = new Scanner(new FileInputStream(new File(filename)));
             int i = 0;
-            for (; (i < ApplicationConfig.MAX_X_VALUE) && sc.hasNextLine(); i++) {
+            for (; (i <= ApplicationConfig.MAX_X_VALUE) && sc.hasNextLine(); i++) {
                 String line = sc.nextLine();
                 int j = 0;
-                for (; (j < ApplicationConfig.MAX_Y_VALUE) && (j < line.length()); j++) {
+                for (; (j <= ApplicationConfig.MAX_Y_VALUE) && (j < line.length()); j++) {
                     char ch = line.charAt(j);
                     Node current_node = new Node(i, j);
                     MapEdgeMode mode = MapEdgeMode.valueOf(ch);
                     for (Direction direction : mode) {
-                        UnorderedEdge edge = new UnorderedEdge(current_node, current_node.move(direction));
+                        Node target_node = current_node.move(direction);
+                        UnorderedEdge edge = new UnorderedEdge(current_node, target_node);
+                        if (!current_node.isValid()) {
+                            throw new InvalidNodeException(current_node);
+                        }
+                        if (!target_node.isValid()) {
+                            throw new InvalidNodeException(target_node);
+                        }
                         map.addEdge(edge);
                     }
                 }

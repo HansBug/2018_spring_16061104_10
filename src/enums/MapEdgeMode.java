@@ -9,7 +9,7 @@ import java.util.List;
  */
 public enum MapEdgeMode implements Iterable<Direction> {
     NONE_CONNECTION(0),
-    RIHGT_CONNECTION(1, Direction.RIGHT),
+    RIGHT_CONNECTION(1, Direction.RIGHT),
     LEFT_DIRECTION(2, Direction.DOWN),
     BOTH_CONNECTION(3, Direction.RIGHT, Direction.DOWN);
     
