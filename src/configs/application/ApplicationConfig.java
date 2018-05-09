@@ -83,4 +83,9 @@ public abstract class ApplicationConfig implements ApplicationInterface {
      * 地图文件地址
      */
     public static final String MAP_FILE_PATH = "map.txt";
+    
+    /**
+     * 日志文件地址
+     */
+    public static final String LOG_FILE_PATH = "log.txt";
 }

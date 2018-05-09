@@ -266,6 +266,7 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
         this.request = request;
         this.target = request.getSource();
         this.status = GOING_TO_SERVICE;
+        System.out.println(String.format("Taxi No.%s get the ticked %s.", this.getTaxiId(), request));
     }
     
     /**
@@ -343,10 +344,12 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
                 if (this.status == TaxiStatus.GOING_TO_SERVICE) {  // 到达顾客位置
                     this.status = TaxiStatus.IN_SERVICE;
                     this.target = this.request.getTarget();
+                    System.out.println(String.format("Taxi No.%s arrive at the position of the customer %s of ticket %s.", this.getTaxiId(), this.position, request));
                 } else if (this.status == TaxiStatus.IN_SERVICE) {  // 顾客到达目的地
                     this.status = TaxiStatus.STOPPED;
                     this.target = null;
                     this.credit += CREDIT_ARRIVE_DELTA;
+                    System.out.println(String.format("Taxi No.%s arrive at the position of the target %s of ticket %s.", this.getTaxiId(), this.position, request));
                 }
             }
         }

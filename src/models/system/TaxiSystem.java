@@ -21,15 +21,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class TaxiSystem extends SimpleCirculationThread implements TaxiSystemInterface {
     /**
+     * 请求时间窗
+     */
+    private static final long REQUEST_TIME_WINDOW = 7500;
+    /**
      * 出租车数据
      */
     private final HashMap<Integer, Taxi> taxis;
-    
     /**
      * 时间窗口
      */
     private final ConcurrentHashMap<TaxiRequest, HashSet<Taxi>> windows;
-    
     /**
      * 地图
      */
@@ -112,45 +114,6 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
     }
     
     /**
-     * 信用度排序器
-     */
-    private class CreditRandomTaxi extends ComparablePair<Integer, Integer> {
-        /**
-         * 出租车
-         */
-        private final Taxi taxi;
-        
-        /**
-         * 构造函数
-         *
-         * @param taxi 出租车
-         */
-        public CreditRandomTaxi(Taxi taxi) {
-            /**
-             * @modifies:
-             *          \this.taxi;
-             * @effects:
-             *          \this.taxi == taxi;
-             */
-            super(taxi.getCredit(), ApplicationHelper.getRandom().nextInt());
-            this.taxi = taxi;
-        }
-        
-        /**
-         * 获取出租车
-         *
-         * @return 出租车
-         */
-        public Taxi getTaxi() {
-            /**
-             * @effects:
-             *          \result == \this.taxi;
-             */
-            return taxi;
-        }
-    }
-    
-    /**
      * 获取地图
      *
      * @return 地图
@@ -169,12 +132,19 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
      * @param request 请求
      */
     public void putRequest(TaxiRequest request) {
+        /**
+         * @modifies:
+         *          \this.windows;
+         *          \this.
+         * @effects:
+         *          request will be allocated into the system/
+         */
         Timestamp timestamp = new Timestamp();
         if (this.windows.containsKey(request)) {
             duplicatedTaxiRequest(request);
         } else {
             this.windows.put(request, new HashSet<>());
-            (new DelayUntilThread(timestamp.getOffseted(7500)) {
+            (new DelayUntilThread(timestamp.getOffseted(REQUEST_TIME_WINDOW)) {
                 /**
                  * 触发器
                  * @param e 触发事件对象
@@ -206,13 +176,16 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
                                 return -o1.compareTo(o2);
                             }
                         });
+                        boolean success = false;
                         for (CreditRandomTaxi taxi_con : array) {
                             Taxi taxi = taxi_con.getTaxi();
                             if (taxi.getStatus().isAvailable()) {
                                 taxi.putRequest(request);
+                                success = true;
                                 break;
                             }
                         }
+                        if (!success) allocTaxiFailed(request);  // 没排到
                     }
                 }
                 
@@ -295,5 +268,44 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
          *          None;
          */
         e.getThrowable().printStackTrace();
+    }
+    
+    /**
+     * 信用度排序器
+     */
+    private class CreditRandomTaxi extends ComparablePair<Integer, Integer> {
+        /**
+         * 出租车
+         */
+        private final Taxi taxi;
+        
+        /**
+         * 构造函数
+         *
+         * @param taxi 出租车
+         */
+        public CreditRandomTaxi(Taxi taxi) {
+            /**
+             * @modifies:
+             *          \this.taxi;
+             * @effects:
+             *          \this.taxi == taxi;
+             */
+            super(taxi.getCredit(), ApplicationHelper.getRandom().nextInt());
+            this.taxi = taxi;
+        }
+        
+        /**
+         * 获取出租车
+         *
+         * @return 出租车
+         */
+        public Taxi getTaxi() {
+            /**
+             * @effects:
+             *          \result == \this.taxi;
+             */
+            return taxi;
+        }
     }
 }
