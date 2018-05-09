@@ -436,4 +436,23 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
             return this.getFirst();
         }
     }
+    
+    /**
+     * 转为字符串对象
+     *
+     * @return 字符串对象
+     */
+    @Override
+    public String toString() {
+        /**
+         * @effects:
+         *          (( \ this.status = = IN_SERVICE) || (\this.status == GOING_TO_SERVICE)) ==> \result == "Taxi No.id, position: position, credit: credit, status: status, ticket: ticket";
+         *          ((\this.status == FREE) || (\this.status == STOPPED)) ==> \result == "Taxi No.id, position: position, credit: credit, status: status";
+         */
+        if (this.status.isBusy()) {
+            return String.format("Taxi No.%s, position: %s, credit: %s, status: %s, ticket: %s", this.id, this.position, this.credit, this.status, this.request);
+        } else {
+            return String.format("Taxi No.%s, position: %s, credit: %s, status: %s", this.id, this.position, this.credit, this.status);
+        }
+    }
 }

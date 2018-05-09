@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 /**
@@ -81,6 +82,16 @@ public abstract class Main {
         @Override
         public void duplicatedTaxiRequest(TaxiRequest request) {
             System.out.println(String.format("Duplicated request - \"%s\".", request));
+        }
+        
+        /**
+         * 道路开闭动作
+         * @param edge   道路
+         * @param status 状态
+         */
+        @Override
+        public void setRoadStatus(Edge edge, int status) {
+            gui.setRoadStatus(edge, status);
         }
     };
     private static final TaxiSystemGUI gui = new TaxiSystemGUI(system);
@@ -154,7 +165,52 @@ public abstract class Main {
      * 程序中场交互
      */
     private static void interactive() throws InterruptedException {
-        Thread.sleep(1000000);
+        while (stdin.hasNextLine()) {
+            String line = stdin.nextLine();
+            boolean success = false;
+            
+            try {
+                TaxiRequest r = TaxiRequest.valueOf(line);
+                system.putRequest(r);
+                System.out.println(String.format("Taxi request %s accepted!", r));
+                success = true;
+            } catch (ParserException e) {
+            }
+            
+            try {
+                QueryTaxiRequest r = QueryTaxiRequest.parse(line);
+                Taxi taxi = system.getTaxiById(r.getTaxiId());
+                System.out.println(String.format("result: %s", taxi));
+                success = true;
+            } catch (ParserException e) {
+            }
+            
+            try {
+                QueryTaxiByStatusRequest r = QueryTaxiByStatusRequest.parse(line);
+                String result = "";
+                for (Taxi taxi : system.getTaxisByStatus(r.getStatus())) {
+                    if (result.length() > 0) {
+                        result = String.format("%s, ", result);
+                    }
+                    result = String.format("%s%s", result, taxi.getTaxiId());
+                }
+                System.out.println(String.format("taxi_ids: {%s}", result));
+                success = true;
+            } catch (ParserException e) {
+            }
+            
+            try {
+                SetEdgeStatusRequest r = SetEdgeStatusRequest.parse(line);
+                r.apply(system);
+                System.out.println("Operation success");
+                success = true;
+            } catch (ParserException e) {
+            }
+            
+            if (!success) {
+                System.out.println(String.format("Invalid request \"%s\", rejected!", line));
+            }
+        }
     }
     
     /**

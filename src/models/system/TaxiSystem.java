@@ -1,5 +1,6 @@
 package models.system;
 
+import enums.TaxiStatus;
 import events.thread.ThreadExceptionEvent;
 import events.thread.ThreadTriggerWithReturnValueEvent;
 import helpers.application.ApplicationHelper;
@@ -7,6 +8,7 @@ import interfaces.system.TaxiSystemInterface;
 import models.map.Edge;
 import models.map.FlowMap;
 import models.map.Node;
+import models.request.InteractiveSystemRequest;
 import models.request.TaxiRequest;
 import models.structure.pair.ComparablePair;
 import models.thread.circulation.SimpleCirculationThread;
@@ -87,6 +89,38 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
         }
     }
     
+    /**
+     * 增加边
+     *
+     * @param edge 增加边
+     */
+    public void addEdge(Edge edge) {
+        /**
+         * @modifies:
+         *          \this.map;
+         * @effects:
+         *          edge will be added into \this.map;
+         */
+        this.map.addEdge(edge);
+        this.setRoadStatus(edge, 1);
+    }
+    
+    /**
+     * 删除边
+     *
+     * @param edge 删除边
+     */
+    public void removeEdge(Edge edge) {
+        /**
+         * @modifies:
+         *          \this.map;
+         * @effects:
+         *          edge will be removed from \this.map;
+         */
+        this.map.removeEdge(edge);
+        this.setRoadStatus(edge, 0);
+    }
+    
     /***
      * 获取指定id的出租车
      * @param id 出租车id
@@ -98,6 +132,41 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
          *          (\ exists Taxi taxi ; taxi.id = = id) ==> \result == taxi;
          */
         return this.taxis.get(id);
+    }
+    
+    /**
+     * 根据状态查询出租车
+     *
+     * @param status 状态
+     * @return 出租车集合
+     */
+    public ArrayList<Taxi> getTaxisByStatus(TaxiStatus status) {
+        /**
+         * @effects:
+         *          \result == set(\all Taxi taxi; \this.taxis.values().contains(taxi) && (taxi.status == status));
+         */
+        HashSet<Taxi> result = new HashSet<>();
+        for (Taxi taxi : this.taxis.values()) {
+            if (taxi.getStatus() == status) result.add(taxi);
+        }
+        ArrayList<Taxi> array = new ArrayList<>(result);
+        array.sort(new Comparator<Taxi>() {
+            /**
+             * 排序依据
+             * @param o1 元素1
+             * @param o2 元素2
+             * @return 比较结果
+             */
+            @Override
+            public int compare(Taxi o1, Taxi o2) {
+                /**
+                 * @effects:
+                 *          \result == (o1.taxi_id <=> o2.taxi_id);
+                 */
+                return Integer.compare(o1.getTaxiId(), o2.getTaxiId());
+            }
+        });
+        return array;
     }
     
     /**

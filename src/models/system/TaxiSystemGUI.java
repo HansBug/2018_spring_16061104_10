@@ -2,6 +2,7 @@ package models.system;
 
 import configs.application.ApplicationConfig;
 import events.thread.ThreadExceptionEvent;
+import models.map.Edge;
 import models.thread.circulation.SimpleCirculationThread;
 import shit_like_code.official_gui.TaxiGui;
 
@@ -84,6 +85,22 @@ public class TaxiSystemGUI extends SimpleCirculationThread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * 设置道路开闭
+     *
+     * @param edge   路径
+     * @param status 开闭
+     */
+    public void setRoadStatus(Edge edge, int status) {
+        /**
+         * @modifies:
+         *          \this.gui;
+         * @effects:
+         *          road edge's status will be changed;
+         */
+        gui.SetRoadStatus(edge.getSource().toPoint(), edge.getTarget().toPoint(), status);
     }
     
     /**

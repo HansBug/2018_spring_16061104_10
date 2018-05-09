@@ -4,8 +4,8 @@ package enums;
  * 边状态
  */
 public enum EdgeStatus {
-    CONNECTED,
-    UNCONNECTED;
+    CONNECT,
+    UNCONNECT;
     
     /**
      * 判断是否连接
@@ -15,8 +15,8 @@ public enum EdgeStatus {
     public boolean isConnected() {
         /**
          * @effects:
-         *          \result == (\this == CONNECTED);
+         *          \result == (\this == CONNECT);
          */
-        return this == CONNECTED;
+        return this == CONNECT;
     }
 }

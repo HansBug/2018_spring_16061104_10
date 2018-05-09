@@ -29,4 +29,12 @@ public interface TaxiSystemInterface {
      * @param request 出租车请求
      */
     void duplicatedTaxiRequest(TaxiRequest request);
+    
+    /**
+     * 设置道路状态行为
+     *
+     * @param edge   道路
+     * @param status 状态
+     */
+    void setRoadStatus(Edge edge, int status);
 }

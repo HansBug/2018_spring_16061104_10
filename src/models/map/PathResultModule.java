@@ -128,7 +128,7 @@ public class PathResultModule {
         while (current != null) {
             list.add(current);
             WeightFlowSource info = this.getSourceInformation(current);
-            if ((info == null) || ((info.getSource() == null) && (current != this.source))) {
+            if ((info == null) || ((info.getSource() == null) && (!current.equals(this.source)))) {
                 throw new NoPathException(source, target);
             } else {
                 current = info.getSource();
