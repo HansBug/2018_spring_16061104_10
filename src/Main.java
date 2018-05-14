@@ -26,22 +26,6 @@ import java.util.Scanner;
 public abstract class Main implements ApplicationClassInterface {
     private static final Scanner stdin = new Scanner(System.in);
     private static final MapFlow flow = new MapFlow();
-    private static final TimerThread flow_map_switch = new TimerThread(ApplicationConfig.TIMER_FLOW_CLEAR_TIMESPAN) {
-        /**
-         * 触发器事件
-         * @param e 事件对象
-         */
-        @Override
-        public void trigger(ThreadTriggerEvent e) {
-            /**
-             * @modifies:
-             *          flow;
-             * @effects:
-             *          flow data in variable "flow" will be switched;
-             */
-            flow.switchMap();
-        }
-    };
     private static final FlowMap map = new FlowMap() {
         /**
          * 读取流量
@@ -185,7 +169,6 @@ public abstract class Main implements ApplicationClassInterface {
          *          gui will be started;
          *          system will be started and the requests will be pushed into it at one time;
          */
-        flow_map_switch.start();
         gui.start();
         system.start();
         for (TaxiRequest request : taxi_pre_requests) {
@@ -266,11 +249,9 @@ public abstract class Main implements ApplicationClassInterface {
         System.out.println("Gracefully shutting down the system...");
         gui.exitGracefully();
         system.exitGracefully();
-        flow_map_switch.exitGracefully();
         
         gui.join();
         system.join();
-        flow_map_switch.join();
         System.out.println("System stopped.");
         System.exit(0);
     }

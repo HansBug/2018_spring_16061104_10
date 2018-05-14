@@ -201,6 +201,6 @@ No.98 IN_SERVICE [CR, (1, 2), (39, 79)]
 * <del>请无视官方gui包的包名。Q: 这明明是真心话啊喵？ A: 闭嘴，大实话怎么能瞎说。</del>
 * <del>Author：看我对你多好，为了怕你找不出来bug，连程序架构和Javadoc都给你了233 Tester：滚</del>
 * <del>Q：jsf啥的怎么办？ A：随你咯，120+个类欢迎慢慢找</del> 
-* 看不懂代码？[javadoc在此](javadoc\index.html)，欢迎找bug，<del>给个笑容自己体会，找到bug算我输</del>。（<del>Q：那。。河蟹六系怎么办？ A：这种东西我才不在乎23333。对了比起这个，这么多次一个bug都没有过才叫寂寞呢</del>）
+* 看不懂代码？[javadoc在此](javadoc\index.html)，欢迎找bug，<del>给个笑容自己体会，找到bug算我输</del>。（<del>Q：那。。河蟹六系怎么办？ A：这种东西我才不在乎23333。比起这个，这么多次一个bug都没有过才叫寂寞呢</del>）
 
 ![](http://misaka-oss.oss-cn-beijing.aliyuncs.com/others/misaka-sister-1.jpg)

@@ -6,7 +6,13 @@ import interfaces.application.ApplicationClassInterface;
  * 移动方向类
  */
 public enum Direction implements ApplicationClassInterface {
-    UP(-1, 0, 0), DOWN(1, 0, 2), LEFT(0, -1, 1), RIGHT(0, 1, 3);
+    /**
+     * 各枚举项
+     */
+    UP(-1, 0, 0),
+    DOWN(1, 0, 2),
+    LEFT(0, -1, 1),
+    RIGHT(0, 1, 3);
     
     /**
      * X增量

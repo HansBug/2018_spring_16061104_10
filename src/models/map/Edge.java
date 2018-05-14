@@ -1,5 +1,6 @@
 package models.map;
 
+import models.structure.pair.ComparablePair;
 import models.structure.pair.GenericPair;
 
 /**
@@ -79,5 +80,19 @@ public class Edge extends GenericPair<Node, Node> {
          *          \result will be the format of (source) --> (target);
          */
         return String.format("%s --> %s", this.getSource(), this.getTarget());
+    }
+    
+    /**
+     * 转化为无向边
+     *
+     * @return 无向边
+     */
+    public UnorderedEdge toUnordered() {
+        /**
+         * @effects:
+         *          \result.first == \this.first;
+         *          \result.second == \this.second;
+         */
+        return new UnorderedEdge(this.getFirst(), this.getSecond());
     }
 }
