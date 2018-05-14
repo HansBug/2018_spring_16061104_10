@@ -1,6 +1,7 @@
 package interfaces.thread;
 
 import events.thread.ThreadTriggerEvent;
+import interfaces.application.ApplicationClassInterface;
 import interfaces.application.ApplicationInterface;
 
 /**

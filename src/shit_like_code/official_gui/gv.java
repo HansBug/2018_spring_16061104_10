@@ -1,9 +1,11 @@
 package shit_like_code.official_gui;
 
+import interfaces.application.ApplicationShitCode;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class gv {// 常用工具
+class gv implements ApplicationShitCode {// 常用工具
     public static int MAXNUM = 1000000;
     
     public static long getTime() {// 获得当前系统时间

@@ -1,10 +1,12 @@
 package shit_like_code.official_gui;
 
+import interfaces.application.ApplicationShitCode;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class myform extends JFrame {// 我的窗体程序
+class myform extends JFrame implements ApplicationShitCode {// 我的窗体程序
     /**
      *
      */

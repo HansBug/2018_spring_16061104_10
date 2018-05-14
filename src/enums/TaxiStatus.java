@@ -1,9 +1,11 @@
 package enums;
 
+import interfaces.application.ApplicationClassInterface;
+
 /**
  * 出租车状态枚举类
  */
-public enum TaxiStatus {
+public enum TaxiStatus implements ApplicationClassInterface {
     /**
      * 各个枚举项
      */

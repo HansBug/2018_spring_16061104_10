@@ -1,6 +1,7 @@
 package models.map;
 
 import exceptions.map.NoPathException;
+import models.application.ApplicationModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 /**
  * 路径结果数据块
  */
-public class PathResultModule {
+public class PathResultModule extends ApplicationModel {
     /**
      * 单源最短路出发点
      */
@@ -123,17 +124,22 @@ public class PathResultModule {
          *          \result will be the shortest path in this data module;
          */
         ArrayList<Node> list = new ArrayList<>();
-        Node current = target;
-        while (current != null) {
-            list.add(current);
-            WeightFlowSource info = this.getSourceInformation(current);
-            if ((info == null) || ((info.getSource() == null) && (!current.equals(this.source)))) {
-                throw new NoPathException(source, target);
-            } else {
-                current = info.getSource();
+        
+        if (this.source.equals(target)) {
+            list.add(target);
+        } else {
+            Node current = target;
+            while (current != null) {
+                list.add(current);
+                WeightFlowSource info = this.getSourceInformation(current);
+                if ((info == null) || ((info.getSource() == null) && (!current.equals(this.source)))) {
+                    throw new NoPathException(source, target);
+                } else {
+                    current = info.getSource();
+                }
             }
+            Collections.reverse(list);
         }
-        Collections.reverse(list);
         return new PathResult(list);
     }
 }

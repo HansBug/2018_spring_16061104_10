@@ -1,5 +1,6 @@
 package interfaces.request;
 
+import interfaces.application.ApplicationClassInterface;
 import interfaces.application.ApplicationInterface;
 
 /**

@@ -74,12 +74,14 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
                      *          windows will be refreshed;
                      */
                     taxiWalkBy(this, edge);
-                    for (Map.Entry<TaxiRequest, HashSet<Taxi>> entry : windows.entrySet()) {
-                        if (entry.getKey().getSource().isNear(this.getPosition())) {
-                            if (!entry.getValue().contains(this)) {
-                                LogHelper.append(String.format("Taxi No.%s(credit: %s) enter the windows of request %s.", this.getTaxiId(), this.getCredit(), entry.getKey()));
-                                entry.getValue().add(this);
-                                this.addCredit();
+                    if (this.isAvailable()) {  // 出租车为空闲状态才可参与抢单
+                        for (Map.Entry<TaxiRequest, HashSet<Taxi>> entry : windows.entrySet()) {
+                            if (entry.getKey().getSource().isNear(this.getPosition())) {
+                                if (!entry.getValue().contains(this)) {
+                                    LogHelper.append(String.format("Taxi No.%s(credit: %s) enter the windows of request %s.", this.getTaxiId(), this.getCredit(), entry.getKey()));
+                                    entry.getValue().add(this);
+                                    this.addCredit();
+                                }
                             }
                         }
                     }

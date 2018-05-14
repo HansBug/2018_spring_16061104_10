@@ -1,6 +1,7 @@
 package interfaces.parser;
 
 import exceptions.parser.ParserException;
+import interfaces.application.ApplicationClassInterface;
 import interfaces.application.ApplicationInterface;
 
 /**

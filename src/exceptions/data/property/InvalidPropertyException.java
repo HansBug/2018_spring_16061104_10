@@ -42,5 +42,4 @@ public class InvalidPropertyException extends ApplicationException {
          */
         return data;
     }
-    
 }

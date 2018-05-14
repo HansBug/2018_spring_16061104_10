@@ -1,9 +1,8 @@
 package interfaces.system;
 
+import interfaces.application.ApplicationClassInterface;
 import interfaces.application.ApplicationInterface;
 import models.map.Edge;
-import models.map.Node;
-import models.map.PathResult;
 
 /**
  * 出租车抽象接口

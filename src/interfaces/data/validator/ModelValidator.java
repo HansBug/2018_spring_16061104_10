@@ -1,6 +1,7 @@
 package interfaces.data.validator;
 
 import exceptions.data.data.InvalidDataException;
+import interfaces.application.ApplicationClassInterface;
 import interfaces.application.ApplicationInterface;
 
 /**

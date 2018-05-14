@@ -1,5 +1,7 @@
 package enums;
 
+import interfaces.application.ApplicationClassInterface;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * 边连接模型
  */
-public enum MapEdgeMode implements Iterable<Direction> {
+public enum MapEdgeMode implements Iterable<Direction>, ApplicationClassInterface {
     NONE_CONNECTION(0),
     RIGHT_CONNECTION(1, Direction.RIGHT),
     DOWN_DIRECTION(2, Direction.DOWN),
@@ -112,7 +114,7 @@ public enum MapEdgeMode implements Iterable<Direction> {
     public static MapEdgeMode valueOf(boolean has_right, boolean has_down) {
         /**
          * @effects:
-         *          (has_down && has_right) ==> \result == BOTH_CONNECTION;
+         *          (has_down & & has_right) ==> \result == BOTH_CONNECTION;
          *          (!has_down && has_right) ==> \result == RIGHT_CONNECTION;
          *          (has_down && !has_right) ==> \result == DOWN_CONNECTION;
          *          (!has_down && !has_right) ==> \result == NONE_CONNECTION;

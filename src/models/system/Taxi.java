@@ -32,9 +32,11 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
      */
     private static final long TAXI_RUN_TIME = 500;
     private static final long TAXI_STOP_TIME = 1000;
+    private static final long TAXI_MAX_FREE_TIME = 20000;
+    private static final long TAXI_ARRIVE_COSTUMER_WAIT_TIME = 1000;
     private static final long CREDIT_ADD_DELTA = 1;
     private static final long CREDIT_ARRIVE_DELTA = 3;
-    private static final long MAX_FREE_COUNT = 20;
+    private static final long MAX_FREE_COUNT = TAXI_MAX_FREE_TIME / TAXI_RUN_TIME;
     
     /**
      * 编号
@@ -149,6 +151,19 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
          *          \result == \this.credit;
          */
         return this.credit;
+    }
+    
+    /**
+     * 出租车是否可用
+     *
+     * @return 出租车是否可用
+     */
+    public boolean isAvailable() {
+        /**
+         * @effects:
+         *          \result == (\this.status == FREE);
+         */
+        return this.getStatus().isAvailable();
     }
     
     /**
@@ -345,16 +360,18 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
             }
             if (this.position.equals(target)) {  // 到达目标点
                 if (this.status == TaxiStatus.GOING_TO_SERVICE) {  // 到达顾客位置
-                    this.status = TaxiStatus.IN_SERVICE;
-                    this.target = this.request.getTarget();
                     System.out.println(String.format("Taxi No.%s arrive at the position of the customer %s of ticket %s.", this.getTaxiId(), this.position, request));
                     LogHelper.append(String.format("Taxi No.%s arrive at the position of the customer %s of ticket %s.", this.getTaxiId(), this.position, request));
+                    timestamp = timestamp.getOffseted(TAXI_ARRIVE_COSTUMER_WAIT_TIME);
+                    sleepUntil(timestamp);
+                    this.status = TaxiStatus.IN_SERVICE;
+                    this.target = this.request.getTarget();
                 } else if (this.status == TaxiStatus.IN_SERVICE) {  // 顾客到达目的地
+                    System.out.println(String.format("Taxi No.%s arrive at the position of the target %s of ticket %s.", this.getTaxiId(), this.position, request));
+                    LogHelper.append(String.format("Taxi No.%s arrive at the position of the target %s of ticket %s.", this.getTaxiId(), this.position, request));
                     this.status = TaxiStatus.STOPPED;
                     this.target = null;
                     this.credit += CREDIT_ARRIVE_DELTA;
-                    System.out.println(String.format("Taxi No.%s arrive at the position of the target %s of ticket %s.", this.getTaxiId(), this.position, request));
-                    LogHelper.append(String.format("Taxi No.%s arrive at the position of the target %s of ticket %s.", this.getTaxiId(), this.position, request));
                 }
             }
         }

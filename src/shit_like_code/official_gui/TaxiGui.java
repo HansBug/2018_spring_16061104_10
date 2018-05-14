@@ -1,8 +1,10 @@
 package shit_like_code.official_gui;
 
+import interfaces.application.ApplicationShitCode;
+
 import java.awt.*;
 
-public class TaxiGui {// GUI接口类
+public class TaxiGui implements ApplicationShitCode {// GUI接口类
     
     public void LoadMap(int[][] map, int size) {
         guigv.m.map = new int[size + 5][size + 5];

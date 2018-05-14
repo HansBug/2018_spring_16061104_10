@@ -1,11 +1,13 @@
 package enums;
 
+import interfaces.application.ApplicationClassInterface;
+
 /**
  * 边状态
  */
-public enum EdgeStatus {
+public enum EdgeStatus implements ApplicationClassInterface {
     CONNECT,
-    UNCONNECT;
+    DISCONNECT;
     
     /**
      * 判断是否连接

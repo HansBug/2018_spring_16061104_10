@@ -57,7 +57,7 @@ public class SetEdgeStatusRequest extends InteractiveSystemRequest {
         /**
          * @effects:
          *          (\ this.status = = CONNECT) ==> \this.edge added into the map;
-         *          (\this.status == UNCONNECT) ==> \this.edge removed from the map;
+         *          (\this.status == DISCONNECT) ==> \this.edge removed from the map;
          */
         if (this.status.isConnected()) {
             system.addEdge(this.edge);

@@ -1,9 +1,11 @@
 package shit_like_code.official_gui;
 
+import interfaces.application.ApplicationShitCode;
+
 import javax.swing.*;
 import java.awt.*;
 
-class DrawBoard extends JPanel {// 绘图板类
+class DrawBoard extends JPanel implements ApplicationShitCode {// 绘图板类
     /**
      *
      */

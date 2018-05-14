@@ -1,9 +1,11 @@
 package shit_like_code.official_gui;
 
 
+import interfaces.application.ApplicationShitCode;
+
 import java.awt.*;
 
-class brush {// 画笔
+class brush implements ApplicationShitCode {// 画笔
     public static int[][] colormap = new int[85][85];
     
     public static void draw(Graphics2D g) {

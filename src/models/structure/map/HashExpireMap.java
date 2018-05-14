@@ -1,6 +1,6 @@
 package models.structure.map;
 
-import interfaces.application.ApplicationInterface;
+import interfaces.application.ApplicationClassInterface;
 import models.structure.object.TimeBasedObject;
 import models.time.Timestamp;
 
@@ -24,7 +24,7 @@ import java.util.function.Function;
  * @param <K> key类型
  * @param <V> value类型
  */
-public class HashExpireMap<K, V> extends HashMap<K, V> implements ApplicationInterface {
+public class HashExpireMap<K, V> extends HashMap<K, V> implements ApplicationClassInterface {
     /**
      * 带时间的key对象
      */

@@ -1,9 +1,11 @@
 package enums;
 
+import interfaces.application.ApplicationClassInterface;
+
 /**
  * 移动方向类
  */
-public enum Direction {
+public enum Direction implements ApplicationClassInterface {
     UP(-1, 0), DOWN(1, 0), LEFT(0, -1), RIGHT(0, 1);
     
     /**
@@ -60,4 +62,6 @@ public enum Direction {
          */
         return this.delta_y;
     }
+    
+    
 }

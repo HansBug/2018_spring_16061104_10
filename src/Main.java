@@ -2,12 +2,12 @@ import configs.application.ApplicationConfig;
 import enums.Direction;
 import enums.MapEdgeMode;
 import events.thread.ThreadTriggerEvent;
+import events.thread.ThreadTriggerWithReturnValueEvent;
 import exceptions.data.user.InvalidNodeException;
 import exceptions.io.MapIncompleteException;
 import exceptions.map.MapNotConnectedException;
 import exceptions.parser.ParserException;
-import helpers.log.LogHelper;
-import helpers.map.MapHelper;
+import interfaces.application.ApplicationClassInterface;
 import models.map.*;
 import models.request.*;
 import models.system.Taxi;
@@ -17,15 +17,13 @@ import models.thread.circulation.TimerThread;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
 
 /**
  * 主类
  */
-public abstract class Main {
+public abstract class Main implements ApplicationClassInterface {
     private static final Scanner stdin = new Scanner(System.in);
     private static final MapFlow flow = new MapFlow();
     private static final TimerThread flow_map_switch = new TimerThread(ApplicationConfig.TIMER_FLOW_CLEAR_TIMESPAN) {

@@ -25,7 +25,7 @@ public abstract class DataModel extends TimeBasedModel implements ModelValidator
     /**
      * 数据验证模型存储
      */
-    private HashSet<PropertyModel> validation_models = new HashSet<>();
+    private final HashSet<PropertyModel> validation_models = new HashSet<>();
     
     /**
      * 异常类

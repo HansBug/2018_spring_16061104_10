@@ -2,7 +2,7 @@ package configs.application;
 
 import exceptions.data.property.InvalidPropertyException;
 import exceptions.data.user.InvalidNodeException;
-import interfaces.application.ApplicationInterface;
+import interfaces.application.ApplicationClassInterface;
 import interfaces.data.validator.PropertyValidator;
 import models.map.Node;
 
@@ -16,7 +16,7 @@ import models.map.Node;
  * 1、该类仅用于放置全局设置参数
  * 2、和某个类密切相关的常数建议写在特定的类中
  */
-public abstract class ApplicationConfig implements ApplicationInterface {
+public abstract class ApplicationConfig implements ApplicationClassInterface {
     /**
      * 示例全局设置
      */

@@ -1,6 +1,8 @@
 package shit_like_code.official_gui;
 
-class node {// 结点信息
+import interfaces.application.ApplicationShitCode;
+
+class node implements ApplicationShitCode {// 结点信息
     int NO;
     int depth;
     

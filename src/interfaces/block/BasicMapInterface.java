@@ -1,6 +1,7 @@
 package interfaces.block;
 
 import exceptions.map.NoEdgeException;
+import interfaces.application.ApplicationClassInterface;
 import interfaces.application.ApplicationInterface;
 import models.map.Edge;
 

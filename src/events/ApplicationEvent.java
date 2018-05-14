@@ -1,5 +1,7 @@
 package events;
 
+import interfaces.application.ApplicationClassInterface;
+
 /**
  * 事件对象
  * <p>
@@ -11,7 +13,7 @@ package events;
  *
  * @param <T> 事件发生者类型
  */
-public abstract class ApplicationEvent<T> {
+public abstract class ApplicationEvent<T> implements ApplicationClassInterface {
     /**
      * 事件发生者
      */

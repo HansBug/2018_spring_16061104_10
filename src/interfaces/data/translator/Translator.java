@@ -1,5 +1,6 @@
 package interfaces.data.translator;
 
+import interfaces.application.ApplicationClassInterface;
 import interfaces.application.ApplicationInterface;
 
 /**

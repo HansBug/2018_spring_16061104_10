@@ -1,10 +1,12 @@
 package shit_like_code.official_gui;
 
 
+import interfaces.application.ApplicationShitCode;
+
 import javax.swing.*;
 import java.awt.*;
 
-class processform extends JFrame {
+class processform extends JFrame implements ApplicationShitCode {
     /**
      *
      */

@@ -1,8 +1,10 @@
 package shit_like_code.official_gui;
 
+import interfaces.application.ApplicationShitCode;
+
 import javax.swing.*;
 
-class debugform extends JFrame {
+class debugform extends JFrame implements ApplicationShitCode {
     /**
      *
      */

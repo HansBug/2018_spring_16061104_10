@@ -24,7 +24,7 @@ public class ThreadTriggerEvent extends ApplicationThreadEvent {
     /**
      * 构造函数
      *
-     * @param host              事件发生者
+     * @param host             事件发生者
      * @param target_timestamp 时间戳
      */
     public ThreadTriggerEvent(ApplicationThread host, Timestamp target_timestamp) {
