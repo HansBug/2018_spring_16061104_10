@@ -123,6 +123,24 @@ public class Node extends ComparablePair<Integer, Integer> {
     }
     
     /**
+     * 检测是否合法
+     *
+     * @return 是否合法
+     */
+    @Override
+    public boolean repOK() {
+        /**
+         * @effects:
+         *          normal behavior:
+         *              \this will be validated by Application.NODE_VALIDATOR;
+         *              \result = true;
+         *          exceptional behavior(InvalidPropertyException):
+         *              \result == false;
+         */
+        return isValid();
+    }
+    
+    /**
      * 点相近
      *
      * @param node 另一个点

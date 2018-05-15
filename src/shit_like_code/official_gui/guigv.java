@@ -16,6 +16,7 @@ class guigv implements ApplicationShitCode {
     /* GUI */
     public static JPanel drawboard;
     public static int[][] colormap;
+    public static int[][] lightmap;
     public static boolean redraw = false;
     public static int xoffset = 0;
     public static int yoffset = 0;

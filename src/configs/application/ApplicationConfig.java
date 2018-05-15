@@ -85,6 +85,11 @@ public abstract class ApplicationConfig implements ApplicationClassInterface {
     public static final String MAP_FILE_PATH = "map.txt";
     
     /**
+     * 信号灯文件地址
+     */
+    public static final String TRAFFIC_LIGHT_FILE_PATH = "traffic.txt";
+    
+    /**
      * 日志文件地址
      */
     public static final String LOG_FILE_PATH = "log.txt";

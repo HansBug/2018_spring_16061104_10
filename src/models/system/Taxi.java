@@ -345,9 +345,10 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
      * 移动到相邻位置
      *
      * @param node 相邻位置点
+     * @return 是否移动成功
      * @throws InterruptedException 中断异常
      */
-    private void moveToSurroundingNode(Node node) throws InterruptedException {
+    private boolean moveToSurroundingNode(Node node) throws InterruptedException {
         /**
          * @requires:
          *          node != null;
@@ -356,11 +357,12 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
          *          \this.position;
          * @effects:
          *          \this.position == node;
+         *          \result will be whether it moved successfully;
          */
         Direction direction = Direction.getDirectionBySourceTarget(this.position, node);
         if (direction != null) {
             if ((this.last_direction != null) && (!this.map.getLightStatus(this.position).isAllowed(this.last_direction, direction))) {
-//                System.out.println(String.format("%s Taxi No.%s wait!", new Timestamp(), this.id));
+                LogHelper.append(String.format("Taxi No.%s wait for red light!", this.id));
                 this.waiting_for_traffic_light = true;
                 ConditionTriggerThread wait = new ConditionTriggerThread() {
                     @Override
@@ -391,17 +393,18 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
                 wait.join();
                 this.timestamp = new Timestamp();
                 this.waiting_for_traffic_light = false;
-                
-//                System.out.println(String.format("%s Taxi No.%s pass!", new Timestamp(), this.id));
+                LogHelper.append(String.format("Taxi No.%s wait for red light complete!", this.id));
             }
         }
         Edge edge = new Edge(this.position, node);
+        if (!this.map.containsEdge(edge)) return false;
         this.beforeWalkByEdge(edge);
         timestamp = timestamp.getOffseted(TAXI_RUN_TIME);
         sleepUntil(timestamp);
         this.last_direction = direction;
         this.position = node;
         this.afterWalkByEdge(edge);
+        return true;
     }
     
     /**
@@ -435,7 +438,7 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
             for (Node node : path) {
                 if (!this.map.containsEdge(new Edge(this.position, node))) break;  // 边被阻断
                 LogHelper.append(String.format("Taxi No.%s run from %s to %s.", this.getTaxiId(), this.position, node));
-                moveToSurroundingNode(node);
+                if (!moveToSurroundingNode(node)) break;  // 移动失败
                 count++;
                 if (count >= max_count) break;  // 该刷新路径了
             }

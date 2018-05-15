@@ -8,6 +8,7 @@ public class TaxiGui implements ApplicationShitCode {// GUI接口类
     
     public void LoadMap(int[][] map, int size) {
         guigv.m.map = new int[size + 5][size + 5];
+        guigv.lightmap = new int[size + 5][size + 5];//初始化红绿灯
         // 复制地图
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -51,6 +52,10 @@ public class TaxiGui implements ApplicationShitCode {// GUI接口类
         int distance = guigv.m.distance(src.x, src.y, dst.x, dst.y);
         debugform form1 = new debugform();
         form1.text1.setText("从(" + src.x + "," + src.y + ")到(" + dst.x + "," + dst.y + ")的最短路径长度是" + distance);
+    }
+    
+    public void SetLightStatus(Point p, int status) {//设置红绿灯 status 0 没有红绿灯 1 东西方向为绿灯 2 东西方向为红灯
+        guigv.lightmap[p.x][p.y] = status;
     }
     
     public void SetRoadStatus(Point p1, Point p2, int status) {// status 0关闭 1打开

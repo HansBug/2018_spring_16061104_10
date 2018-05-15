@@ -20,7 +20,13 @@ import models.thread.circulation.TimerThread;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+
+import static java.lang.Thread.sleep;
+import static models.thread.ApplicationThread.sleepUntil;
+import static models.thread.ApplicationThread.sleepUntilCondition;
 
 /**
  * 主类
@@ -41,9 +47,11 @@ public abstract class Main implements ApplicationClassInterface {
              *          traffic_lights.reversed != \old(traffic_lights.reversed);
              */
             traffic_lights.switchStatus();
+            gui.refreshTrafficLight();
         }
     };
     private static final TrafficLights traffic_lights = new TrafficLights();
+    
     private static final Scanner stdin = new Scanner(System.in);
     private static final MapFlow flow = new MapFlow();
     private static final FlowMap map = new FlowMap() {
@@ -89,7 +97,6 @@ public abstract class Main implements ApplicationClassInterface {
              *          the value of the edge in flow will be increased by 1;
              */
             flow.addFlow(edge, 1);
-            
         }
         
         /**
@@ -137,6 +144,8 @@ public abstract class Main implements ApplicationClassInterface {
     private static final TaxiSystemGUI gui = new TaxiSystemGUI(system);
     private static final ArrayList<TaxiRequest> taxi_pre_requests = new ArrayList<>();
     
+    private static final HashMap<Node, CrossRoadLightStatus> road_status = new HashMap<>();
+    
     /**
      * 主程序
      *
@@ -168,11 +177,29 @@ public abstract class Main implements ApplicationClassInterface {
     private static void initialize() throws Throwable {
         /**
          * @effects:
-         *          initialize the map file;
+         *          the map file in MAP_FILE_PATH will be initialized;
+         *          the traffic light file in TRAFFIC_LIGHT_FILE_PATH will be initialized;
+         *
          */
+        // initialize the map file
         System.out.println(String.format("Loading map from file \"%s\"...", new File(ApplicationConfig.MAP_FILE_PATH).getAbsoluteFile()));
         loadMapFile(ApplicationConfig.MAP_FILE_PATH);
-        System.out.println("Map loaded!");
+        System.out.println("Map file loaded!");
+        sleep(100);
+        
+        // initialize the traffic light file(when error occurred,just skip it)
+        System.out.println(String.format("Loading traffic lights from file \"%s\"...", new File(ApplicationConfig.TRAFFIC_LIGHT_FILE_PATH).getAbsoluteFile()));
+        try {
+            loadTrafficLightFile(ApplicationConfig.TRAFFIC_LIGHT_FILE_PATH);
+            System.out.println("Traffic light file loaded!");
+        } catch (Throwable e) {
+            System.out.println("Error occurred when loading traffic light file!");
+            System.out.println(String.format("[%s] %s", e.getClass().getName(), e.getMessage()));
+        }
+        for (Map.Entry<Node, CrossRoadLightStatus> entry : road_status.entrySet()) {
+            traffic_lights.setStatus(entry.getKey(), entry.getValue());
+        }
+        sleep(100);
     }
     
     /**
@@ -185,6 +212,7 @@ public abstract class Main implements ApplicationClassInterface {
          *          the pre-load file will be loaded;
          */
         dataValidation();
+        sleep(100);
         preLoadFile();
     }
     
@@ -204,6 +232,7 @@ public abstract class Main implements ApplicationClassInterface {
          */
         traffic_light_switch.start();
         gui.start();
+        
         system.start();
         for (TaxiRequest request : taxi_pre_requests) {
             system.putRequest(request);
@@ -340,6 +369,49 @@ public abstract class Main implements ApplicationClassInterface {
             sc.close();
         } catch (Throwable e) {
             if (sc != null) sc.close();
+            throw e;
+        }
+    }
+    
+    /**
+     * 信号灯初始化
+     *
+     * @param filename 文件名
+     * @throws Throwable 任意异常类
+     */
+    private static void loadTrafficLightFile(String filename) throws Throwable {
+        /**
+         * @modifies:
+         *          \this.map;
+         * @modifies:
+         *          traffic lights will be initialized into \this.road_status;
+         *          (file not found || char not identified || enum not exists || map not completed) ==> throw Exception;
+         */
+        Scanner sc = null;
+        try {
+            sc = new Scanner(new FileInputStream(new File(filename)));
+            int i = 0;
+            for (; (i <= ApplicationConfig.MAX_X_VALUE) && sc.hasNextLine(); i++) {
+                String line = sc.nextLine();
+                int j = 0;
+                for (; (j <= ApplicationConfig.MAX_Y_VALUE) && (j < line.length()); j++) {
+                    char ch = line.charAt(j);
+                    Node current_node = new Node(i, j);
+                    int value = Integer.parseInt(String.valueOf(ch));
+                    CrossRoadLightStatus status = CrossRoadLightStatus.valueOf(value);
+                    road_status.put(current_node, status);
+                }
+                if (j < ApplicationConfig.MAX_Y_VALUE) {
+                    throw new MapIncompleteException(filename);
+                }
+            }
+            if (i < ApplicationConfig.MAX_X_VALUE) {
+                throw new MapIncompleteException(filename);
+            }
+            sc.close();
+        } catch (Throwable e) {
+            if (sc != null) sc.close();
+            road_status.clear();  // 出现异常情况则无效化全部操作
             throw e;
         }
     }

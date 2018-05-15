@@ -4,6 +4,7 @@ import configs.application.ApplicationConfig;
 import enums.TaxiStatus;
 import events.thread.ThreadExceptionEvent;
 import models.map.Edge;
+import models.map.Node;
 import models.thread.circulation.SimpleCirculationThread;
 import shit_like_code.official_gui.TaxiGui;
 
@@ -90,6 +91,24 @@ public class TaxiSystemGUI extends SimpleCirculationThread {
             sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+    
+    /**
+     * 信号灯刷新
+     */
+    public void refreshTrafficLight() {
+        /**
+         * @modifies:
+         *          \this.gui;
+         * @effects:
+         *          this status of all the traffic lights will be displayed on \this.gui;
+         */
+        for (int i = ApplicationConfig.MIN_X_VALUE; i <= ApplicationConfig.MAX_X_VALUE; i++) {
+            for (int j = ApplicationConfig.MIN_Y_VALUE; j <= ApplicationConfig.MAX_Y_VALUE; j++) {
+                Node node = new Node(i, j);
+                this.gui.SetLightStatus(node.toPoint(), this.taxi_system.getMap().getLightStatus(node).getValue());
+            }
         }
     }
     

@@ -80,6 +80,16 @@
 
 **地图仍采用单独文件输入，而不是load_file输入**
 
+### 信号灯输入
+格式参见[指导书](http://misaka-oss.oss-cn-beijing.aliyuncs.com/cs/oo/OO%E7%AC%AC09%E6%AC%A1%E4%BD%9C%E4%B8%9A%E6%8C%87%E5%AF%BC%E4%B9%A6.pdf)，文件名`traffic.txt`。
+
+**信号灯采用单独文件输入，而不是load_file输入**
+
+此外：
+
+* 如果信号灯输入文件格式有异常，将在控制台上进行反馈
+* 如果有异常，将跳过这一块**直接继续执行接下来的程序，且视为所有路口均无信号灯（保证操作原子性）**。 
+
 ### load_file输入
 * 在程序的一开始，基础数据加载完毕后，可以输入**一条**`load_file`指令
 * 格式为`load_file <filename>`，例如`load_file 1.txt`表示加载`1.txt`（**绝对路径相对路径均支持**）
@@ -190,6 +200,10 @@ No.98 IN_SERVICE [CR, (1, 2), (39, 79)]
 * 同时节省计算资源（显然）
 * 除此之外，由于`x`为一个随机数，所以意味着当同一批大量订单下达之后（假设100辆车全部进入待命状态），接下来各个车重新计算的时间点将被分散到（`2` `3` `4` `5` `6`五个时间点上，之后也将大致呈现均匀分布。故同一时间的计算压力将减少`80%`，系统运行将更加平稳）
 
+#### 官方<del>智障</del>GUI
+* 官方GUI放置在`shit_like_code`包下
+* 本人这次对官方GUI包进行了一点小的改动，当一辆车在等待红灯的时候，将会出现<i style="color: #ff00ff">紫色圈</i>。
+
 ## 注意事项
 * 本程序中除非特殊说明，否则**输入的枚举类参数均大小写不敏感，且`-`和`_`等价**。
 * 除上条之外，本程序中各处格式，除非特殊说明，否则**一律大小写敏感**。
@@ -197,10 +211,10 @@ No.98 IN_SERVICE [CR, (1, 2), (39, 79)]
 * 事件机制本质是基于抽象类+接口的**面向接口编程**。
 * 由于图片和指导书存储在云端，如果本文档图片加载不出来，**请连网**。
 * `detail.txt`日志文件配合`grep`命令食用更佳。（具体：`cat detail.txt|grep "Taxi No.xxx"`类似这样的；<del>Q：Windows用户怎么办？ A：那就人眼看吧，祝你不要看漏哦23333</del>）
-* 本程序`repOK`均使用全局接口`ApplicationClassInterface`默认实现，除少数类情况特殊进行了重写之外，行为均为**判定内部属性（包括私有属性）是否全部不为`null`**（Q：怎么实现的呢？为啥类中找不到`repOK`？ A：自行Google，`java interface default`，提高姿势水平） 
+* 本程序`repOK`均使用全局接口`ApplicationClassInterface`默认实现，除少数类情况特殊进行了重写之外（例如`Node`类），行为均为**判定内部属性（包括私有属性）是否全部不为`null`**（Q：怎么实现的呢？为啥类中找不到`repOK`？ A：自行Google，`java interface default`，提高姿势水平） 
 * <del>请无视官方gui包的包名。Q: 这明明是真心话啊喵？ A: 闭嘴，大实话怎么能瞎说。</del>
-* <del>Author：看我对你多好，为了怕你找不出来bug，连程序架构和Javadoc都给你了233 Tester：滚</del>
-* <del>Q：jsf啥的怎么办？ A：随你咯，120+个类欢迎慢慢找</del> 
+* Q：jsf啥的怎么办？ A：随你咯<del>，120+个类欢迎慢慢找</del>
+* Q：类Overwrite在哪？ A：每个类上头都有javadoc，等价于Overwrite。 
 * 看不懂代码？[javadoc在此](javadoc\index.html)，欢迎找bug，<del>给个笑容自己体会，找到bug算我输</del>。（<del>Q：那。。河蟹六系怎么办？ A：这种东西我才不在乎23333。比起这个，这么多次一个bug都没有过才叫寂寞呢</del>）
 
 ![](http://misaka-oss.oss-cn-beijing.aliyuncs.com/others/misaka-sister-1.jpg)

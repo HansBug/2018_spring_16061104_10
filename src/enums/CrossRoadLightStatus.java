@@ -14,6 +14,11 @@ public enum CrossRoadLightStatus implements ApplicationClassInterface {
     NORTH_SOUTH(2);
     
     /**
+     * 默认属性值
+     */
+    public static final CrossRoadLightStatus DEFAULT_VALUE = NONE;
+    
+    /**
      *
      */
     private final int value;
@@ -104,5 +109,22 @@ public enum CrossRoadLightStatus implements ApplicationClassInterface {
         } else {
             return NONE;
         }
+    }
+    
+    /**
+     * 根据value查询枚举
+     *
+     * @param value value
+     * @return 查询结果
+     */
+    public static CrossRoadLightStatus valueOf(int value) {
+        /**
+         * @effects:
+         *          \result will be the enum item which value equals to value;
+         */
+        for (CrossRoadLightStatus status : values()) {
+            if (status.value == value) return status;
+        }
+        throw new EnumConstantNotPresentException(CrossRoadLightStatus.class, String.valueOf(value));
     }
 }

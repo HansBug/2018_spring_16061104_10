@@ -48,7 +48,7 @@ public class TrafficLights extends ApplicationModel {
          * @effects:
          *          \result will be the value of the node in \this.map;
          */
-        return this.map.getOrDefault(node, CrossRoadLightStatus.NONE);
+        return this.map.getOrDefault(node, CrossRoadLightStatus.DEFAULT_VALUE);
     }
     
     /**
