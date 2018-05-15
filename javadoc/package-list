@@ -37,6 +37,7 @@ models.system
 models.thread
 models.thread.circulation
 models.thread.safe
+models.thread.timeline
 models.thread.trigger
 models.time
 shit_like_code.official_gui
