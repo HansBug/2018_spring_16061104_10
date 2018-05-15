@@ -6,3 +6,4 @@
 .gitignore
 /out
 *.txt
+/src/Sample.java

@@ -10,6 +10,7 @@
 * 编写者操作系统 Windows 10 Professional
 * 基本硬件配置 4core i7 CPU, 8G RAM
 
+<<<<<<< HEAD
 ## 需求分析与设计
 ### 需求
 * 模拟一个出租车系统
