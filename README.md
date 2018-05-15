@@ -204,7 +204,7 @@ No.98 IN_SERVICE [CR, (1, 2), (39, 79)]
 * 官方GUI放置在`shit_like_code`包下
 * 本人这次对官方GUI包进行了一点小的改动，当一辆车在等待红灯的时候，将会出现<i style="color: #ff00ff">紫色圈</i>。
 
-## 注意事项
+## 注意事项   
 * 本程序中除非特殊说明，否则**输入的枚举类参数均大小写不敏感，且`-`和`_`等价**。
 * 除上条之外，本程序中各处格式，除非特殊说明，否则**一律大小写敏感**。
 * 本程序中各处输入格式，除非特殊说明，否则一律**支持在元素之间带空格**。例如：`[CR,(0, -0),( 1 , 1) ] `合法，而`[CR, (1 2, 3), (3, 2)]`不合法。
@@ -214,7 +214,7 @@ No.98 IN_SERVICE [CR, (1, 2), (39, 79)]
 * 本程序`repOK`均使用全局接口`ApplicationClassInterface`默认实现，除少数类情况特殊进行了重写之外（例如`Node`类），行为均为**判定内部属性（包括私有属性）是否全部不为`null`**（Q：怎么实现的呢？为啥类中找不到`repOK`？ A：自行Google，`java interface default`，提高姿势水平） 
 * <del>请无视官方gui包的包名。Q: 这明明是真心话啊喵？ A: 闭嘴，大实话怎么能瞎说。</del>
 * Q：jsf啥的怎么办？ A：随你咯<del>，120+个类欢迎慢慢找</del>
-* Q：类Overwrite在哪？ A：每个类上头都有javadoc，等价于Overwrite。 
+* Q：类Overview在哪？ A：每个类上头都有javadoc，等价于Overview。 
 * 看不懂代码？[javadoc在此](javadoc\index.html)，欢迎找bug，<del>给个笑容自己体会，找到bug算我输</del>。（<del>Q：那。。河蟹六系怎么办？ A：这种东西我才不在乎23333。比起这个，这么多次一个bug都没有过才叫寂寞呢</del>）
 
 ![](http://misaka-oss.oss-cn-beijing.aliyuncs.com/others/misaka-sister-1.jpg)
