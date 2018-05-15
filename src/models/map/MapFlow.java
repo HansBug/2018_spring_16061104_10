@@ -40,11 +40,13 @@ public class MapFlow extends ApplicationModel {
          * @effects:
          *          \result will be the MapFlowUnit of the edge (create one if not exists)
          */
-        UnorderedEdge unordered = edge.toUnordered();
-        if (!this.flow_units.containsKey(unordered)) {
-            this.flow_units.put(unordered, new MapFlowUnit());
+        synchronized (this.flow_units) {
+            UnorderedEdge unordered = edge.toUnordered();
+            if (!this.flow_units.containsKey(unordered)) {
+                this.flow_units.put(unordered, new MapFlowUnit());
+            }
+            return this.flow_units.get(unordered);
         }
-        return this.flow_units.get(unordered);
     }
     
     /**
@@ -63,7 +65,9 @@ public class MapFlow extends ApplicationModel {
          */
         int result = getFlowUnit(edge).query();
         if (result == 0) {
-            this.flow_units.remove(edge.toUnordered());
+            synchronized (this.flow_units) {
+                this.flow_units.remove(edge.toUnordered());
+            }
         }
         return result;
     }
@@ -114,6 +118,8 @@ public class MapFlow extends ApplicationModel {
          * @effects:
          *          data in \this.flow_units will be cleared;
          */
-        this.flow_units.clear();
+        synchronized (this.flow_units) {
+            this.flow_units.clear();
+        }
     }
 }
