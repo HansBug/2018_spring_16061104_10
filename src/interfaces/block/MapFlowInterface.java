@@ -15,4 +15,7 @@ public interface MapFlowInterface extends BasicMapInterface {
      * @return 流量值
      */
     int getEdgeFlow(Edge e);
+    
+    
+    
 }

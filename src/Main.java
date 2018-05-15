@@ -7,6 +7,7 @@ import exceptions.data.user.InvalidNodeException;
 import exceptions.io.MapIncompleteException;
 import exceptions.map.MapNotConnectedException;
 import exceptions.parser.ParserException;
+import helpers.application.ApplicationHelper;
 import interfaces.application.ApplicationClassInterface;
 import models.map.*;
 import models.request.*;
@@ -24,6 +25,24 @@ import java.util.Scanner;
  * 主类
  */
 public abstract class Main implements ApplicationClassInterface {
+    private static final int TRAFFIC_LIGHT_SWITCH_INTERVAL = 500 + ApplicationHelper.getRandom().nextInt(500);
+    private static final TimerThread traffic_light_switch = new TimerThread(TRAFFIC_LIGHT_SWITCH_INTERVAL) {
+        /**
+         * 触发器
+         * @param e 事件对象
+         */
+        @Override
+        public void trigger(ThreadTriggerEvent e) {
+            /**
+             * @modifies;
+             *          traffic_lights;
+             * @effects:
+             *          traffic_lights.reversed != \old(traffic_lights.reversed);
+             */
+            traffic_lights.switchStatus();
+        }
+    };
+    private static final TrafficLights traffic_lights = new TrafficLights();
     private static final Scanner stdin = new Scanner(System.in);
     private static final MapFlow flow = new MapFlow();
     private static final FlowMap map = new FlowMap() {
@@ -169,11 +188,13 @@ public abstract class Main implements ApplicationClassInterface {
          *          gui will be started;
          *          system will be started and the requests will be pushed into it at one time;
          */
+        traffic_light_switch.start();
         gui.start();
         system.start();
         for (TaxiRequest request : taxi_pre_requests) {
             system.putRequest(request);
         }
+        System.out.println(String.format("Traffic light switch interval: %sms", TRAFFIC_LIGHT_SWITCH_INTERVAL));
     }
     
     /**
@@ -249,9 +270,11 @@ public abstract class Main implements ApplicationClassInterface {
         System.out.println("Gracefully shutting down the system...");
         gui.exitGracefully();
         system.exitGracefully();
+        traffic_light_switch.exitGracefully();
         
         gui.join();
         system.join();
+        traffic_light_switch.exitGracefully();
         System.out.println("System stopped.");
         System.exit(0);
     }

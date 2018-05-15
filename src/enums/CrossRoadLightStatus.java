@@ -41,9 +41,9 @@ public enum CrossRoadLightStatus implements ApplicationClassInterface {
     public boolean isAllowed(Direction source, Direction target) {
         /**
          * @effects:
-         *          \result == (source.isRight(target) || isAllowDirection(target));
+         *          \result == (source.isRight(target) || source.isBack(target) || isAllowDirection(target));
          */
-        return source.isRight(target) || isAllowedDirection(target);
+        return source.isRight(target) || source.isBack(target) || isAllowedDirection(target);
     }
     
     /**
