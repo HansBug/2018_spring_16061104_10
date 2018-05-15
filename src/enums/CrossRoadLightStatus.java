@@ -9,8 +9,44 @@ public enum CrossRoadLightStatus implements ApplicationClassInterface {
     /**
      * 两种状态
      */
-    NORTH_SOUTH,
-    EAST_WEST;
+    NONE(0),
+    EAST_WEST(1),
+    NORTH_SOUTH(2);
+    
+    /**
+     *
+     */
+    private final int value;
+    
+    /**
+     * 构造函数
+     *
+     * @param value 对应值
+     */
+    private CrossRoadLightStatus(int value) {
+        /**
+         * @requires:
+         *          (\ exists CrossRoadLightStatus status ; status.value = = value);
+         * @modifies:
+         *          \this.value;
+         * @effects:
+         *          \this.value == value;
+         */
+        this.value = value;
+    }
+    
+    /**
+     * 获取对应值
+     *
+     * @return 对应值
+     */
+    public int getValue() {
+        /**
+         * @effects:
+         *          \result == \this.value;
+         */
+        return value;
+    }
     
     /**
      * 判断是否为通行方向
@@ -23,11 +59,14 @@ public enum CrossRoadLightStatus implements ApplicationClassInterface {
          * @effects:
          *          (\ this = = NORTH_SOUTH) ==> \result == ((direction == UP) || (direction == DOWN));
          *          (\this == EAST_WEST) ==> \result == ((direction == LEFT) || (direction == RIGHT));
+         *          (\this == NONE) ==> \result == true;
          */
         if (this == NORTH_SOUTH) {
             return (direction == Direction.UP) || (direction == Direction.DOWN);
-        } else {
+        } else if (this == EAST_WEST) {
             return (direction == Direction.LEFT) || (direction == Direction.RIGHT);
+        } else {
+            return true;
         }
     }
     
@@ -41,9 +80,9 @@ public enum CrossRoadLightStatus implements ApplicationClassInterface {
     public boolean isAllowed(Direction source, Direction target) {
         /**
          * @effects:
-         *          \result == (source.isRight(target) || source.isBack(target) || isAllowDirection(target));
+         *          \result == (this == NONE) || (source.isRight(target) || source.isBack(target) || isAllowDirection(target));
          */
-        return source.isRight(target) || source.isBack(target) || isAllowedDirection(target);
+        return (this == NONE) || source.isRight(target) || source.isBack(target) || isAllowedDirection(target);
     }
     
     /**
@@ -56,11 +95,14 @@ public enum CrossRoadLightStatus implements ApplicationClassInterface {
          * @effects:
          *          (\ old ( \ this) == NORTH_SOUTH) ==> \result == EAST_WEST;
          *          (\old(\this) == EAST_WEST) ==> \result == NORTH_SOUTH;
+         *          (\old(\this) == NONE) ==> \result == NONE;
          */
         if (this == NORTH_SOUTH) {
             return EAST_WEST;
-        } else {
+        } else if (this == EAST_WEST) {
             return NORTH_SOUTH;
+        } else {
+            return NONE;
         }
     }
 }

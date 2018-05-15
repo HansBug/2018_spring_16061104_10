@@ -1,6 +1,7 @@
 package enums;
 
 import interfaces.application.ApplicationClassInterface;
+import models.map.Node;
 
 /**
  * 移动方向类
@@ -113,6 +114,22 @@ public enum Direction implements ApplicationClassInterface {
             if ((value.delta_x == delta_x) && (value.delta_y == delta_y)) return value;
         }
         return null;
+    }
+    
+    /**
+     * 根据相邻点获取方向
+     *
+     * @param source 原点
+     * @param target 目标点
+     * @return 方向
+     */
+    public static Direction getDirectionBySourceTarget(Node source, Node target) {
+        /**
+         * @effects:
+         *          (\ exists Direction direction : direction.delta_x = = ( target.x - source.x) && direction.delta_y == (target.y - source.y)) ==> \result == direction;
+         *          (\all Direction direction : direction.delta_x != (target.x - source.x) || direction.delta_y != (target.y - source.y)) ==> \result == null;
+         */
+        return getDirectionByDelta(target.getX() - source.getX(), target.getY() - source.getY());
     }
     
     /**

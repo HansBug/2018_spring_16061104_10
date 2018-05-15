@@ -1,7 +1,9 @@
 package models.system;
 
+import enums.Direction;
 import enums.TaxiStatus;
 import events.thread.ThreadExceptionEvent;
+import events.thread.ThreadTriggerWithReturnValueEvent;
 import helpers.application.ApplicationHelper;
 import helpers.log.LogHelper;
 import helpers.map.MapHelper;
@@ -13,6 +15,7 @@ import models.map.PathResult;
 import models.request.TaxiRequest;
 import models.structure.pair.ComparablePair;
 import models.thread.circulation.SimpleCirculationThread;
+import models.thread.trigger.ConditionTriggerThread;
 import models.time.Timestamp;
 
 import java.util.ArrayList;
@@ -20,7 +23,6 @@ import java.util.Collections;
 
 import static enums.TaxiStatus.FREE;
 import static enums.TaxiStatus.GOING_TO_SERVICE;
-import static enums.TaxiStatus.IN_SERVICE;
 import static enums.TaxiStatus.STOPPED;
 
 /**
@@ -70,6 +72,16 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
      * 时间戳
      */
     private Timestamp timestamp;
+    
+    /**
+     * 等待红绿灯
+     */
+    private boolean waiting_for_traffic_light = false;
+    
+    /**
+     * 上次方向
+     */
+    private Direction last_direction = null;
     
     /**
      * 自由行动时间
@@ -179,6 +191,19 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
          *          \this.credit == credit;
          */
         this.credit = credit;
+    }
+    
+    /**
+     * 判断正在等红绿灯
+     *
+     * @return 是否在等红绿灯
+     */
+    public boolean isWaitingForTrafficLight() {
+        /**
+         * @effects:
+         *          \result == \this.waiting_for_traffic_light;
+         */
+        return waiting_for_traffic_light;
     }
     
     /**
@@ -303,7 +328,7 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
      *
      * @return 目标点
      */
-    public Node getMoveRandomly() {
+    public Node getRandomSurroundingNode() {
         /**
          * @effects:
          *          \result will be the best target point;
@@ -314,6 +339,69 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
         }
         Collections.sort(array);
         return array.get(0).getTarget();
+    }
+    
+    /**
+     * 移动到相邻位置
+     *
+     * @param node 相邻位置点
+     * @throws InterruptedException 中断异常
+     */
+    private void moveToSurroundingNode(Node node) throws InterruptedException {
+        /**
+         * @requires:
+         *          node != null;
+         *          node is near \this.position;
+         * @modifies:
+         *          \this.position;
+         * @effects:
+         *          \this.position == node;
+         */
+        Direction direction = Direction.getDirectionBySourceTarget(this.position, node);
+        if (direction != null) {
+            if ((this.last_direction != null) && (!this.map.getLightStatus(this.position).isAllowed(this.last_direction, direction))) {
+//                System.out.println(String.format("%s Taxi No.%s wait!", new Timestamp(), this.id));
+                this.waiting_for_traffic_light = true;
+                ConditionTriggerThread wait = new ConditionTriggerThread() {
+                    @Override
+                    public boolean checkCondition() {
+                        if (last_direction == null) return true;
+                        return map.getLightStatus(position).isAllowed(last_direction, direction);
+                    }
+                    
+                    @Override
+                    public void trigger(ThreadTriggerWithReturnValueEvent e) throws Throwable {
+                    
+                    }
+                    
+                    /**
+                     * 异常处理
+                     *
+                     * @param e 异常被触发事件
+                     */
+                    @Override
+                    public void exceptionCaught(ThreadExceptionEvent e) {
+                        /**
+                         * @effects:
+                         *          None;
+                         */
+                    }
+                };
+                wait.start();
+                wait.join();
+                this.timestamp = new Timestamp();
+                this.waiting_for_traffic_light = false;
+                
+//                System.out.println(String.format("%s Taxi No.%s pass!", new Timestamp(), this.id));
+            }
+        }
+        Edge edge = new Edge(this.position, node);
+        this.beforeWalkByEdge(edge);
+        timestamp = timestamp.getOffseted(TAXI_RUN_TIME);
+        sleepUntil(timestamp);
+        this.last_direction = direction;
+        this.position = node;
+        this.afterWalkByEdge(edge);
     }
     
     /**
@@ -328,11 +416,7 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
          *          Taxi \this will move as the program setted;
          */
         if (this.status == FREE) {
-            Node target = getMoveRandomly();
-            this.walkBy(new Edge(this.position, target));
-            timestamp = timestamp.getOffseted(TAXI_RUN_TIME);
-            sleepUntil(timestamp);
-            this.position = target;
+            moveToSurroundingNode(getRandomSurroundingNode());
             this.free_count += 1;
             if (this.free_count >= MAX_FREE_COUNT) {
                 this.free_count = 0;
@@ -350,11 +434,8 @@ public abstract class Taxi extends SimpleCirculationThread implements TaxiInterf
             int max_count = getRefreshSpan();
             for (Node node : path) {
                 if (!this.map.containsEdge(new Edge(this.position, node))) break;  // 边被阻断
-                this.walkBy(new Edge(this.position, node));
                 LogHelper.append(String.format("Taxi No.%s run from %s to %s.", this.getTaxiId(), this.position, node));
-                timestamp = timestamp.getOffseted(TAXI_RUN_TIME);
-                sleepUntil(timestamp);
-                this.position = node;
+                moveToSurroundingNode(node);
                 count++;
                 if (count >= max_count) break;  // 该刷新路径了
             }

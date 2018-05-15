@@ -1,4 +1,5 @@
 import configs.application.ApplicationConfig;
+import enums.CrossRoadLightStatus;
 import enums.Direction;
 import enums.MapEdgeMode;
 import events.thread.ThreadTriggerEvent;
@@ -58,6 +59,19 @@ public abstract class Main implements ApplicationClassInterface {
              *          \result will be the flow of the edge e in flow;
              */
             return flow.getFlow(edge);
+        }
+        
+        /**
+         * @param node 节点
+         * @return 路口状态
+         */
+        @Override
+        public CrossRoadLightStatus getLightStatus(Node node) {
+            /**
+             * @effects:
+             *          \result will be the status of the node in traffic_lights;
+             */
+            return traffic_lights.getStatus(node);
         }
     };
     private static final TaxiSystem system = new TaxiSystem(map, ApplicationConfig.TAXI_COUNT) {

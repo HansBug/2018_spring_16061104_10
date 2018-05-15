@@ -28,7 +28,7 @@ class brush implements ApplicationShitCode {// 画笔
             if (gt.status > -1) {
                 // System.out.println("####"+gt.x+" "+gt.y);
                 taximap[gt.x][gt.y] = gt.status;
-                if (gt.status == 1) {
+                if (gt.status % 4 == 1) {
                     colormap[gt.x][gt.y] = 1;// 路线染色
                 }
             }
@@ -60,15 +60,15 @@ class brush implements ApplicationShitCode {// 画笔
                         g.setColor(Color.RED);
                     else
                         g.setColor(Color.BLACK);
-                    int memj=(int) ((j * factor + guigv.xoffset) * guigv.percent);
+                    int memj = (int) ((j * factor + guigv.xoffset) * guigv.percent);
                     g.drawLine(memj,
                             (int) ((i * factor + guigv.yoffset) * guigv.percent),
                             memj,
                             (int) (((i + 1) * factor + guigv.yoffset) * guigv.percent));
                     //绘制道路流量
-                    if(guigv.drawflow){
+                    if (guigv.drawflow) {
                         g.setColor(Color.BLUE);
-                        g.drawString(""+guigv.GetFlow(i, j, i+1, j), memj,
+                        g.drawString("" + guigv.GetFlow(i, j, i + 1, j), memj,
                                 (int) (((i + 0.5) * factor + guigv.yoffset) * guigv.percent));
                     }
                 }
@@ -77,29 +77,35 @@ class brush implements ApplicationShitCode {// 画笔
                         g.setColor(Color.RED);
                     else
                         g.setColor(Color.BLACK);
-                    int memi=(int) ((i * factor + guigv.yoffset) * guigv.percent);
+                    int memi = (int) ((i * factor + guigv.yoffset) * guigv.percent);
                     g.drawLine((int) ((j * factor + guigv.xoffset) * guigv.percent),
                             memi,
                             (int) (((j + 1) * factor + guigv.xoffset) * guigv.percent),
                             memi);
                     //绘制道路流量
-                    if(guigv.drawflow){
+                    if (guigv.drawflow) {
                         g.setColor(Color.BLUE);
-                        g.drawString(""+guigv.GetFlow(i, j, i, j+1), (int) (((j + 0.5) * factor + guigv.xoffset) * guigv.percent),
+                        g.drawString("" + guigv.GetFlow(i, j, i, j + 1), (int) (((j + 0.5) * factor + guigv.xoffset) * guigv.percent),
                                 memi);
                     }
                 }
                 int targetWidth;
-                if (taximap[i][j] == 3) {
+                Color edge_color = null;
+                int value = taximap[i][j];
+                if (value > 4) {
+                    edge_color = Color.MAGENTA;
+                    value %= 4;
+                }
+                if (value == 3) {
                     g.setColor(Color.GREEN);
                     targetWidth = 2;
-                } else if (taximap[i][j] == 2) {
+                } else if (value == 2) {
                     g.setColor(Color.RED);
                     targetWidth = 2;
-                } else if (taximap[i][j] == 1) {
+                } else if (value == 1) {
                     g.setColor(Color.BLUE);
                     targetWidth = 2;
-                } else if (taximap[i][j] == 0) {
+                } else if (value == 0) {
                     g.setColor(Color.YELLOW);
                     targetWidth = 2;
                 } else {
@@ -113,8 +119,18 @@ class brush implements ApplicationShitCode {// 画笔
                     cleft = cleft - (int) (cwidth / 4);
                     ctop = ctop - (int) (cwidth / 4);
                 }
+    
+                if (edge_color != null) {
+                    Color c = g.getColor();
+                    g.setColor(edge_color);
+                    g.drawOval(cleft, ctop, cwidth + 1, cwidth + 1);
+                    g.setColor(c);
+                }
+                
                 // g.fillOval((int)((j*factor-width/2+guigv.xoffset)*guigv.percent),(int)((i*factor-width/2+guigv.yoffset)*guigv.percent),(int)(width*guigv.percent)*targetWidth,(int)(width*guigv.percent)*targetWidth);
+                
                 g.fillOval(cleft, ctop, cwidth, cwidth);// 绘制点
+                
                 // 标记srclist中的点
                 for (Point p : guigv.srclist) {
                     g.setColor(Color.RED);

@@ -1,5 +1,6 @@
 package interfaces.block;
 
+import enums.CrossRoadLightStatus;
 import models.map.Edge;
 import models.map.Node;
 import models.structure.pair.UnorderedPair;
@@ -16,6 +17,11 @@ public interface MapFlowInterface extends BasicMapInterface {
      */
     int getEdgeFlow(Edge e);
     
-    
-    
+    /**
+     * 获取十字路口状态信息
+     *
+     * @param node 节点
+     * @return 状态信息
+     */
+    CrossRoadLightStatus getLightStatus(Node node);
 }

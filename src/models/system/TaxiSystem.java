@@ -65,15 +65,14 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
                  * @param edge 经过边
                  */
                 @Override
-                public void walkBy(Edge edge) {
+                public void beforeWalkByEdge(Edge edge) {
                     /**
                      * @modifies:
                      *          windows;
                      * @effects:
-                     *          taxiWalkBy will be triggered;
+                     *
                      *          windows will be refreshed;
                      */
-                    taxiWalkBy(this, edge);
                     if (this.isAvailable()) {  // 出租车为空闲状态才可参与抢单
                         for (Map.Entry<TaxiRequest, HashSet<Taxi>> entry : windows.entrySet()) {
                             if (entry.getKey().getSource().isNear(this.getPosition())) {
@@ -85,6 +84,19 @@ public abstract class TaxiSystem extends SimpleCirculationThread implements Taxi
                             }
                         }
                     }
+                }
+                
+                /**
+                 * 走过边之后
+                 * @param edge 经过边
+                 */
+                @Override
+                public void afterWalkByEdge(Edge edge) {
+                    /**
+                     * @effects:
+                     *          taxiWalkBy will be triggered;
+                     */
+                    taxiWalkBy(this, edge);
                 }
             };
             taxis.put(i, taxi);

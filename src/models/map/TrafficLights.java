@@ -48,7 +48,7 @@ public class TrafficLights extends ApplicationModel {
          * @effects:
          *          \result will be the value of the node in \this.map;
          */
-        return this.map.getOrDefault(node, CrossRoadLightStatus.NORTH_SOUTH);
+        return this.map.getOrDefault(node, CrossRoadLightStatus.NONE);
     }
     
     /**
@@ -85,8 +85,8 @@ public class TrafficLights extends ApplicationModel {
          * @modifies:
          *          \this.map;
          * @effects:
-         *          (\ this.reverser) ==> the value of the node in \this.map will be status;
-         *          (!\this.reverser) ==> the value of the node in \this.map will be status.getReversed();
+         *          (\ this.reversed) ==> the value of the node in \this.map will be status;
+         *          (!\this.reversed) ==> the value of the node in \this.map will be status.getReversed();
          */
         if (this.reversed) {
             this.map.put(node, status.getReversed());

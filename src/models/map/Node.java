@@ -123,10 +123,10 @@ public class Node extends ComparablePair<Integer, Integer> {
     }
     
     /**
-     * 点相邻
+     * 点相近
      *
      * @param node 另一个点
-     * @return 相邻
+     * @return 相近
      */
     public boolean isNear(Node node) {
         /**

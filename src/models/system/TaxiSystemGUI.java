@@ -1,6 +1,7 @@
 package models.system;
 
 import configs.application.ApplicationConfig;
+import enums.TaxiStatus;
 import events.thread.ThreadExceptionEvent;
 import models.map.Edge;
 import models.thread.circulation.SimpleCirculationThread;
@@ -78,7 +79,12 @@ public class TaxiSystemGUI extends SimpleCirculationThread {
         for (Map.Entry<Integer, Taxi> entry : this.taxi_system.getTaxis().entrySet()) {
             Integer key = entry.getKey();
             Taxi value = entry.getValue();
-            this.gui.SetTaxiStatus(key, value.getPosition().toPoint(), value.getStatus().getValue());
+            
+            this.gui.SetTaxiStatus(
+                    key,
+                    value.getPosition().toPoint(),
+                    (value.isWaitingForTrafficLight() ? 4 : 0) + value.getStatus().getValue()
+            );
         }
         try {
             sleep(1);

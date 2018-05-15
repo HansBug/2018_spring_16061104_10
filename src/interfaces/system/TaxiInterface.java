@@ -13,5 +13,12 @@ public interface TaxiInterface extends ApplicationInterface {
      *
      * @param edge 经过边
      */
-    void walkBy(Edge edge);
+    void beforeWalkByEdge(Edge edge);
+    
+    /**
+     * 走过边之后
+     *
+     * @param edge 经过边
+     */
+    void afterWalkByEdge(Edge edge);
 }
