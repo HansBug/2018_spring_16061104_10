@@ -21,6 +21,14 @@ import java.util.PriorityQueue;
  */
 public abstract class AbstractTimelineTriggerThread<T, K> extends SimpleCirculationThread implements AbstractTimelineThreadInterface<T, K> {
     /**
+     * @overview:
+     *          抽象时间线类
+     *          
+     *          @param <T> 传入类型
+     *          @param <K> 内部交互类型
+     */
+
+    /**
      * 指向自己
      */
     private final AbstractTimelineTriggerThread<T, K> self = this;

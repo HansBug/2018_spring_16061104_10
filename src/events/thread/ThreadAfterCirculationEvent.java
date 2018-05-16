@@ -7,6 +7,11 @@ import models.thread.ApplicationThread;
  */
 public class ThreadAfterCirculationEvent extends ApplicationThreadEvent {
     /**
+     * @overview:
+     *          线程轮询结束后事件
+     */
+
+    /**
      * 构造函数
      *
      * @param host 事件发生者

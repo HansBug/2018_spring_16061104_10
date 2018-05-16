@@ -11,6 +11,13 @@ import java.util.regex.Matcher;
  */
 public interface RegexParserInterface<T> extends ParserInterface<T> {
     /**
+     * @overview:
+     *          正则解析接口
+     *          
+     *          @param <T> 返回类型
+     */
+
+    /**
      * 获取解析结果
      *
      * @param matcher 正则匹配对象

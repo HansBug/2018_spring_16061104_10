@@ -12,6 +12,11 @@ import java.util.regex.Matcher;
  */
 public class QueryTaxiByStatusRequest extends InteractiveSystemRequest {
     /**
+     * @overview:
+     *          根据状态查出租车请求
+     */
+
+    /**
      * 出租车状态
      */
     private final TaxiStatus status;

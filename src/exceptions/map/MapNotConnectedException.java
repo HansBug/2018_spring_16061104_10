@@ -5,6 +5,11 @@ package exceptions.map;
  */
 public class MapNotConnectedException extends MapException {
     /**
+     * @overview:
+     *          图不连通异常类
+     */
+
+    /**
      * 构造函数
      */
     public MapNotConnectedException() {

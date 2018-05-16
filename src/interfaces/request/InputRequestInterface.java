@@ -10,6 +10,13 @@ import interfaces.application.ApplicationInterface;
  */
 public interface InputRequestInterface<T> extends ApplicationInterface {
     /**
+     * @overview:
+     *          输入请求接口
+     *          
+     *          @param <T> 数据类型
+     */
+
+    /**
      * 数据解析
      *
      * @param str 待解析的字符串

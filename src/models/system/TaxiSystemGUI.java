@@ -15,6 +15,11 @@ import java.util.Map;
  */
 public class TaxiSystemGUI extends SimpleCirculationThread {
     /**
+     * @overview:
+     *          GUI系统
+     */
+
+    /**
      * 出租车系统
      */
     private TaxiSystem taxi_system;

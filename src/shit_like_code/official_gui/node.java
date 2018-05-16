@@ -3,6 +3,10 @@ package shit_like_code.official_gui;
 import interfaces.application.ApplicationShitCode;
 
 class node implements ApplicationShitCode {// 结点信息
+    /**
+     * @overview:
+     */
+
     int NO;
     int depth;
     

@@ -8,6 +8,11 @@ import models.map.Node;
  */
 public enum Direction implements ApplicationClassInterface {
     /**
+     * @overview:
+     *          移动方向类
+     */
+
+    /**
      * 各枚举项
      */
     UP(-1, 0, 0),

@@ -10,6 +10,11 @@ import java.util.Iterator;
  */
 public class PathResult extends ApplicationModel implements Iterable<Node> {
     /**
+     * @overview:
+     *          路径信息类
+     */
+
+    /**
      * 路径数组
      */
     private final ArrayList<Node> path;

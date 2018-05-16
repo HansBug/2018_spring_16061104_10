@@ -8,6 +8,11 @@ import models.thread.ApplicationThread;
  */
 public abstract class ApplicationThreadEvent extends ApplicationEvent<ApplicationThread> {
     /**
+     * @overview:
+     *          线程事件
+     */
+
+    /**
      * 线程事件
      * @param host 发生者
      */

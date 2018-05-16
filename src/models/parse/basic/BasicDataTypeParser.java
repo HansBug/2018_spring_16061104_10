@@ -11,6 +11,13 @@ import models.parse.ApplicationParser;
  */
 public abstract class BasicDataTypeParser<T> extends ApplicationParser<T> implements BasicDataTypeParserInterface<T> {
     /**
+     * @overview:
+     *          基础数据类型解析
+     *          
+     *          @param <T> 目标类型
+     */
+
+    /**
      * 基本数据类型解析
      *
      * @param str 原字符串

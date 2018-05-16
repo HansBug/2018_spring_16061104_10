@@ -14,6 +14,11 @@ import java.util.HashSet;
  */
 public abstract class BasicMap extends ApplicationModel implements BasicMapInterface {
     /**
+     * @overview:
+     *          地图类
+     */
+
+    /**
      * 边存储
      */
     protected final HashMap<Node, HashSet<Node>> edge_map;

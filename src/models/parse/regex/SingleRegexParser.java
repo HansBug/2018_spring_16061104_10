@@ -15,6 +15,13 @@ import java.util.regex.Pattern;
  */
 public abstract class SingleRegexParser<T> extends ApplicationParser<T> implements RegexParserInterface<T> {
     /**
+     * @overview:
+     *          单正则解析类
+     *          
+     *          @param <T> 返回类型
+     */
+
+    /**
      * 正则表达式
      */
     private final Pattern pattern;

@@ -8,6 +8,11 @@ import models.time.Timestamp;
  */
 public abstract class GuestRequest extends InputRequest implements Comparable<TimeBasedModel> {
     /**
+     * @overview:
+     *          用户请求类
+     */
+
+    /**
      * 时间比对
      *
      * @param o 另一个对象

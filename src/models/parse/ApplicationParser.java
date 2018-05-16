@@ -9,4 +9,11 @@ import models.application.ApplicationModel;
  * @param <T> 返回类型
  */
 public abstract class ApplicationParser<T> extends ApplicationModel implements ParserInterface<T> {
+    /**
+     * @overview:
+     *          解析器基类
+     *          
+     *          @param <T> 返回类型
+     */
+
 }

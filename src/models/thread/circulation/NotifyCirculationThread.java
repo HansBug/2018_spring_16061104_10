@@ -14,6 +14,17 @@ import models.thread.ApplicationThread;
  */
 public abstract class NotifyCirculationThread extends ApplicationThread implements NotifyCirculationThreadInterface {
     /**
+     * @overview:
+     *          支持题型功能的轮询型线程
+     *          <p>
+     *          特性：
+     *          1、提供轮询机制
+     *          2、支持自定义阻塞和恢复
+     *          3、支持自定义循环退出条件
+     *          3、支持自定义循环开始前结束后程序
+     */
+
+    /**
      * 阻塞对象
      */
     private final Object wait_object = new Object();

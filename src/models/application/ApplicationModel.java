@@ -9,4 +9,12 @@ import interfaces.application.ApplicationClassInterface;
  * 1、model下除了线程类以外的类均应直接或间接继承该类
  */
 public abstract class ApplicationModel implements ApplicationClassInterface {
+    /**
+     * @overview:
+     *          全局模型基类
+     *          <p>
+     *          建议：
+     *          1、model下除了线程类以外的类均应直接或间接继承该类
+     */
+
 }

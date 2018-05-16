@@ -7,6 +7,11 @@ import models.thread.ApplicationThread;
  */
 public class ThreadBeforeCirculationEvent extends ApplicationThreadEvent {
     /**
+     * @overview:
+     *          循环线程循环开始前事件
+     */
+
+    /**
      * 构造函数
      *
      * @param host 事件发生者

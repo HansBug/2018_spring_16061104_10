@@ -19,6 +19,20 @@ import java.util.HashMap;
  */
 public class ThreadSafePool<T> extends ApplicationThreadModel {
     /**
+     * @overview:
+     *          线程安全对象池
+     *          <p>
+     *          特性：
+     *          1、从同一个安全对象池内通过同一个索引值获取到的对象可以确保永远为同一对象
+     *          <p>
+     *          用途：
+     *          1、基于以上的特性，可以用于快速使用同步锁
+     *          2、可定制翻译函数，更加灵活（对于文件系统中含有相对路径的情况尤其好用）
+     *          
+     *          @param <T> 索引值类型
+     */
+
+    /**
      * 线程安全包裹对象
      */
     private class ThreadSafeObject {

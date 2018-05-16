@@ -10,6 +10,13 @@ import models.application.ApplicationModel;
  */
 class MultipleTimerInformation<T> extends ApplicationModel {
     /**
+     * @overview:
+     *          多重定时器信息类
+     *          
+     *          @param <T> 附加数据类型
+     */
+
+    /**
      * 附加数据
      */
     private final T attached_object;

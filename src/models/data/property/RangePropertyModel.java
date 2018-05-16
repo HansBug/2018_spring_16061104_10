@@ -17,6 +17,20 @@ import exceptions.data.property.OutOfRangePropertyException;
  */
 public class RangePropertyModel<T extends Comparable<T>> extends NotNullPropertyModel<T> {
     /**
+     * @overview:
+     *          范围判定验证器
+     *          <p>
+     *          用途：
+     *          1、可设定上下界（null表示不限制）
+     *          2、可设定是否必须被真包含
+     *          <p>
+     *          注：
+     *          1、数据类型需要支持Comparable接口
+     *          
+     *          @param <T> 数据类型（需要支持Comparable接口）
+     */
+
+    /**
      * 下界
      */
     private T lower_bound;

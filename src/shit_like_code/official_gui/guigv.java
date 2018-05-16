@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 class guigv implements ApplicationShitCode {
+    /**
+     * @overview:
+     */
+
     public static guiInfo m = new guiInfo();// 地图备份
     public static CopyOnWriteArrayList<guitaxi> taxilist = new CopyOnWriteArrayList<guitaxi>();// 出租车列表
     public static CopyOnWriteArrayList<Point> srclist = new CopyOnWriteArrayList<Point>();// 出发点列表

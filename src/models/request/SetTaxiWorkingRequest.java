@@ -15,6 +15,11 @@ import java.util.regex.Matcher;
  */
 public class SetTaxiWorkingRequest extends PreRequest {
     /**
+     * @overview:
+     *          设置出租车工作状态
+     */
+
+    /**
      * 状态
      */
     private final TaxiStatus status;

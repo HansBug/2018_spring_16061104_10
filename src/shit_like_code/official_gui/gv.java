@@ -6,6 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 class gv implements ApplicationShitCode {// 常用工具
+    /**
+     * @overview:
+     */
+
     public static int MAXNUM = 1000000;
     
     public static long getTime() {// 获得当前系统时间

@@ -5,6 +5,11 @@ package models.parse.basic;
  */
 public class DoubleParser extends BasicDataTypeParser<Double> {
     /**
+     * @overview:
+     *          Double解析
+     */
+
+    /**
      * 解析
      *
      * @param str 原字符串

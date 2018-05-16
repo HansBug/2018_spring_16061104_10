@@ -7,6 +7,11 @@ import interfaces.application.ApplicationClassInterface;
  */
 public enum LightStatus implements ApplicationClassInterface {
     /**
+     * @overview:
+     *          出租车状态
+     */
+
+    /**
      * 各个状态
      */
     RED(false),

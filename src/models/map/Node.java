@@ -14,6 +14,11 @@ import java.awt.*;
  */
 public class Node extends ComparablePair<Integer, Integer> {
     /**
+     * @overview:
+     *          点对象
+     */
+
+    /**
      * 构造函数
      *
      * @param x x坐标

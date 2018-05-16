@@ -8,6 +8,11 @@ import models.map.Node;
  */
 public class InvalidNodeException extends InvalidPropertyException {
     /**
+     * @overview:
+     *          非法节点异常
+     */
+
+    /**
      * \构造函数
      *
      * @param node 非法点

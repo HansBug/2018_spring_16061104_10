@@ -19,6 +19,20 @@ import java.util.Date;
  */
 public class Timestamp extends HashBasedModel implements Comparable<Timestamp> {
     /**
+     * @overview:
+     *          时间戳对象
+     *          <p>
+     *          特性：
+     *          1、对unix时间戳进行封装
+     *          <p>
+     *          用途：
+     *          1、封装指定的时间戳
+     *          2、自动获取当前时间戳
+     *          3、提供toString(),输出标准的时间格式（精确到毫秒）
+     *          4、可通过Comparable直接与Timestamp类型比较大小
+     */
+
+    /**
      * 时间戳
      */
     private Long timestamp;

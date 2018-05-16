@@ -25,6 +25,22 @@ import java.util.Iterator;
  */
 public class FileAppendWriter extends ApplicationModel {
     /**
+     * @overview:
+     *          文件追加写入器
+     *          <p>
+     *          功能：
+     *          1、文件追加写信息
+     *          <p>
+     *          特性：
+     *          1、在构造类时可以选择是否为追加模式（即是在原来基础上继续写还是清空）
+     *          2、支持暂存写入行信息（出现IO错误时待写入信息不会丢失，将在下一次一并写入）
+     *          <p>
+     *          注意：
+     *          1、该类为线程安全类
+     *          2、但是，在文件层面未进行线程安全处理，故依然需要在涉及多线程访问的时候注意进行基于文件目标的线程安全封装
+     */
+
+    /**
      * 文件名
      */
     private String filename;

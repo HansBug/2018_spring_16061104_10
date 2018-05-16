@@ -10,6 +10,13 @@ import events.thread.ThreadTriggerWithReturnValueEvent;
  */
 public interface TriggerWithReturnValueInterface<T> extends ApplicationThreadInterface {
     /**
+     * @overview:
+     *          触发器线程接口
+     *          
+     *          @param <T> 返回值类型
+     */
+
+    /**
      * 触发等待
      *
      * @param e 触发前事件对象

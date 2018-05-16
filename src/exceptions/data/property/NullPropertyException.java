@@ -5,6 +5,11 @@ package exceptions.data.property;
  */
 public class NullPropertyException extends InvalidPropertyException {
     /**
+     * @overview:
+     *          参数为null异常
+     */
+
+    /**
      * 构造函数
      *
      * @param data 异常原数据

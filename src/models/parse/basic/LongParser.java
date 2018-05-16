@@ -5,6 +5,11 @@ package models.parse.basic;
  */
 public class LongParser extends BasicDataTypeParser<Long> {
     /**
+     * @overview:
+     *          Long解析
+     */
+
+    /**
      * 解析
      *
      * @param str 原字符串

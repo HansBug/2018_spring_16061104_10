@@ -32,6 +32,26 @@ import java.util.PriorityQueue;
  * @param <T> 附加类型
  */
 public class TimelineTriggerThread<T> extends AbstractTimelineTriggerThread<T, T> {
+    /**
+     * @overview:
+     *          时间线触发器线程
+     *          <p>
+     *          功能：
+     *          1、可以设置多条定时触发任务
+     *          <p>
+     *          特性：
+     *          1、由消息队列统一管理，在即将到时间时启动DelayUntilTrigger
+     *          2、消息队列为优先队列，性能有保证
+     *          3、由于所有任务均为单独线程，故任务内执行时间较长也不会导致后面的任务触发事件受影响，任务执行完毕后该线程自动销毁
+     *          <p>
+     *          注：
+     *          1、该模块精度低于DelayThread和DelayUntilThread（精度误差大约在0-10ms之间，不过没有累积误差）
+     *          2、该模块适用于大量定时任务排队且精度要求不是很高的情况，可以有效节省资源占用
+     *          3、如果为单一且等间隔的任务，推荐使用TimerThread
+     *          
+     *          @param <T> 附加类型
+     */
+
     
     /**
      * 父类继承

@@ -7,6 +7,11 @@ import exceptions.application.ApplicationException;
  */
 public class MapIncompleteException extends ApplicationException {
     /**
+     * @overview:
+     *          地图不完整异常类
+     */
+
+    /**
      * 构造函数
      *
      * @param filename 文件名

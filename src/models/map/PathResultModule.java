@@ -12,6 +12,11 @@ import java.util.HashMap;
  */
 public class PathResultModule extends ApplicationModel {
     /**
+     * @overview:
+     *          路径结果数据块
+     */
+
+    /**
      * 单源最短路出发点
      */
     private final Node source;

@@ -10,6 +10,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TrafficLights extends ApplicationModel {
     /**
+     * @overview:
+     *          路灯控制器
+     */
+
+    /**
      * 存储信息
      */
     private final ConcurrentHashMap<Node, CrossRoadLightStatus> map;

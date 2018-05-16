@@ -8,6 +8,11 @@ import models.time.Timestamp;
  * 多重定时线程
  */
 public class MultipleTimerThread<T> extends AbstractTimelineTriggerThread<T, MultipleTimerInformation<T>> {
+    /**
+     * @overview:
+     *          多重定时线程
+     */
+
     
     /**
      * 数据解压

@@ -5,6 +5,11 @@ package models.parse.basic;
  */
 public class IntegerParser extends BasicDataTypeParser<Integer> {
     /**
+     * @overview:
+     *          Integer解析
+     */
+
+    /**
      * 解析
      *
      * @param str 原字符串

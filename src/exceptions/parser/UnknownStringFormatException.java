@@ -5,6 +5,11 @@ package exceptions.parser;
  */
 public class UnknownStringFormatException extends ParserException {
     /**
+     * @overview:
+     *          字符串格式无法匹配正则
+     */
+
+    /**
      * 构造函数
      *
      * @param origin_string 原字符串

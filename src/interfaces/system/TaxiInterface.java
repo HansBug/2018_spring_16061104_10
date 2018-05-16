@@ -9,6 +9,11 @@ import models.map.Edge;
  */
 public interface TaxiInterface extends ApplicationInterface {
     /**
+     * @overview:
+     *          出租车抽象接口
+     */
+
+    /**
      * 经过边
      *
      * @param edge 经过边

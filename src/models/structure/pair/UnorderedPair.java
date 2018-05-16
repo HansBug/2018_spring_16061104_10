@@ -14,6 +14,20 @@ package models.structure.pair;
  */
 public class UnorderedPair<X> extends GenericPair<X, X> {
     /**
+     * @overview:
+     *          无序二元对类
+     *          <p>
+     *          注：
+     *          1、无序二元对类的hashCode和equals方法均进行了全部重写
+     *          2、故不要将GenericPair和ComparablePair与之进行直接比较（或者说，比较的结果无意义）
+     *          <p>
+     *          建议：
+     *          1、可以用来存储无向图中的无向边，使用很方便，且完美支持HashMap等数据结构2333
+     *          
+     *          @param <X> 数据类型
+     */
+
+    /**
      * 构造函数
      *
      * @param first  第一个值

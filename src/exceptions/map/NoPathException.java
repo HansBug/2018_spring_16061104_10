@@ -7,6 +7,11 @@ import models.map.Node;
  */
 public class NoPathException extends MapException {
     /**
+     * @overview:
+     *          边不存在异常
+     */
+
+    /**
      * 出发点
      */
     private final Node source;

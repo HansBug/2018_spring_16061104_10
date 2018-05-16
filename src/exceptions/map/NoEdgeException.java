@@ -8,6 +8,11 @@ import models.map.Edge;
  */
 public class NoEdgeException extends MapException {
     /**
+     * @overview:
+     *          无边异常
+     */
+
+    /**
      * 边
      */
     private final Edge edge;

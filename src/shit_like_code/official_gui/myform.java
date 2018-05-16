@@ -8,6 +8,10 @@ import java.awt.event.*;
 
 class myform extends JFrame implements ApplicationShitCode {// 我的窗体程序
     /**
+     * @overview:
+     */
+
+    /**
      *
      */
     private static final long serialVersionUID = 1L;

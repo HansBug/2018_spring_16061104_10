@@ -9,6 +9,13 @@ import models.thread.ApplicationThreadModel;
  */
 public class WaitLock<T> extends ApplicationThreadModel {
     /**
+     * @overview:
+     *          等待锁
+     *          
+     *          @param <T> 附加对象类型
+     */
+
+    /**
      * 是否为锁定状态
      */
     private boolean locked = false;

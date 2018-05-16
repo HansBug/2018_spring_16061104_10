@@ -7,6 +7,13 @@ package interfaces.parser;
  */
 public interface BasicDataTypeParserInterface<T> extends ParserInterface<T> {
     /**
+     * @overview:
+     *          基本数据类型解析接口
+     *          
+     *          @param <T> 目标类型
+     */
+
+    /**
      * 获取解析结果
      *
      * @param str 原字符串

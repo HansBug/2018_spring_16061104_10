@@ -8,6 +8,11 @@ import models.structure.pair.GenericPair;
  */
 public class Edge extends GenericPair<Node, Node> {
     /**
+     * @overview:
+     *          边对象
+     */
+
+    /**
      * 构造函数
      *
      * @param source 出发点

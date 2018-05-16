@@ -10,6 +10,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MapFlow extends ApplicationModel {
     /**
+     * @overview:
+     *          流量统计
+     */
+
+    /**
      * 流量单元
      */
     private final ConcurrentHashMap<UnorderedEdge, MapFlowUnit> flow_units;

@@ -32,6 +32,11 @@ import static models.thread.ApplicationThread.sleepUntilCondition;
  * 主类
  */
 public abstract class Main implements ApplicationClassInterface {
+    /**
+     * @overview:
+     *          主类
+     */
+
     private static final int TRAFFIC_LIGHT_SWITCH_INTERVAL = 500 + ApplicationHelper.getRandom().nextInt(500);
     private static final TimerThread traffic_light_switch = new TimerThread(TRAFFIC_LIGHT_SWITCH_INTERVAL) {
         /**

@@ -7,6 +7,10 @@ import java.awt.*;
 
 class DrawBoard extends JPanel implements ApplicationShitCode {// 绘图板类
     /**
+     * @overview:
+     */
+
+    /**
      *
      */
     private static final long serialVersionUID = 1L;

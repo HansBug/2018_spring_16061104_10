@@ -9,6 +9,13 @@ import models.thread.ApplicationThread;
  */
 public class ThreadTriggerWithReturnValueEvent<T> extends ThreadTriggerEvent {
     /**
+     * @overview:
+     *          线程触发器事件
+     *          
+     *          @param <T> 返回值类型
+     */
+
+    /**
      * 返回值
      */
     private T return_value = null;

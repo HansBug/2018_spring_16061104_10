@@ -9,6 +9,11 @@ import models.map.Node;
  */
 public abstract class MapHelper extends ApplicationHelper {
     /**
+     * @overview:
+     *          地图帮助类
+     */
+
+    /**
      * 获取随机节点
      *
      * @return 随即节点

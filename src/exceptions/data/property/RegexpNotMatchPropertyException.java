@@ -5,6 +5,11 @@ package exceptions.data.property;
  */
 public class RegexpNotMatchPropertyException extends InvalidPropertyException {
     /**
+     * @overview:
+     *          正则表达式不匹配参数异常
+     */
+
+    /**
      * 构造函数
      *
      * @param data   异常原数据

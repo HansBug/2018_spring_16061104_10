@@ -11,6 +11,13 @@ import interfaces.application.ApplicationInterface;
  */
 public interface ParserInterface<T> extends ApplicationInterface {
     /**
+     * @overview:
+     *          解析器接口
+     *          
+     *          @param <T> 返回类型
+     */
+
+    /**
      * 解析接口
      *
      * @param str 原字符串

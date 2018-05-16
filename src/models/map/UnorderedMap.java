@@ -5,6 +5,11 @@ package models.map;
  */
 public class UnorderedMap extends BasicMap {
     /**
+     * @overview:
+     *          无向图类
+     */
+
+    /**
      * 新增边
      *
      * @param edge   边

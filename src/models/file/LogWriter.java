@@ -12,6 +12,16 @@ import models.time.Timestamp;
  */
 public class LogWriter extends FileAppendWriter {
     /**
+     * @overview:
+     *          日志写入器
+     *          <p>
+     *          特性：
+     *          1、继承FileAppendWriter
+     *          2、在每一行前增加时间戳信息
+     *          3、线程安全性等信息同FileAppendWriter
+     */
+
+    /**
      * 构造函数
      *
      * @param filename 文件名

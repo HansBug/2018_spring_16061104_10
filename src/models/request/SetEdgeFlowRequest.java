@@ -16,6 +16,11 @@ import java.util.regex.Matcher;
  */
 public class SetEdgeFlowRequest extends PreRequest {
     /**
+     * @overview:
+     *          设置边流量请求
+     */
+
+    /**
      * 边
      */
     private final Edge edge;

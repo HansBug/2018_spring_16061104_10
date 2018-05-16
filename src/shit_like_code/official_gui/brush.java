@@ -6,6 +6,10 @@ import interfaces.application.ApplicationShitCode;
 import java.awt.*;
 
 class brush implements ApplicationShitCode {// 画笔
+    /**
+     * @overview:
+     */
+
     public static int[][] colormap = new int[85][85];
     
     public static void draw(Graphics2D g) {

@@ -11,6 +11,11 @@ import java.util.PriorityQueue;
  */
 public class MapFlowUnit extends ApplicationModel {
     /**
+     * @overview:
+     *          事件流单元
+     */
+
+    /**
      * 过期时间
      */
     private static final long MAP_FLOW_EXPIRE_TIME = ApplicationConfig.TIMER_FLOW_CLEAR_TIMESPAN;

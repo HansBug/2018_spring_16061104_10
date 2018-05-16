@@ -5,6 +5,11 @@ package exceptions.data.data;
  */
 public class DataPropertyConflictException extends InvalidDataException {
     /**
+     * @overview:
+     *          数据字段冲突异常
+     */
+
+    /**
      * 构造函数
      *
      * @param data    非法原数据

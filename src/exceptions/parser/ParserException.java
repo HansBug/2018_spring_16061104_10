@@ -7,6 +7,11 @@ import exceptions.application.ApplicationException;
  */
 public abstract class ParserException extends ApplicationException {
     /**
+     * @overview:
+     *          解析失败
+     */
+
+    /**
      * 原字符串
      */
     private final String origin_string;

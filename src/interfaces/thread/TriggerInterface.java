@@ -9,6 +9,11 @@ import interfaces.application.ApplicationInterface;
  */
 public interface TriggerInterface extends ApplicationInterface {
     /**
+     * @overview:
+     *          触发器线程接口
+     */
+
+    /**
      * 触发器事件
      *
      * @param e 事件对象

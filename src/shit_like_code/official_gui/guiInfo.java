@@ -5,6 +5,10 @@ import interfaces.application.ApplicationShitCode;
 import java.util.Vector;
 
 class guiInfo implements ApplicationShitCode {
+    /**
+     * @overview:
+     */
+
     public int[][] map;
     int[][] graph = new int[6405][6405];// 邻接矩阵
     int[][] D = new int[6405][6405];// 保存从i到j的最小路径值

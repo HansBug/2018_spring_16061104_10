@@ -9,6 +9,11 @@ import models.file.LogWriter;
  */
 public abstract class LogHelper extends ApplicationHelper {
     /**
+     * @overview:
+     *          日志管理
+     */
+
+    /**
      * 日志类
      */
     private static final LogWriter log_writer = new LogWriter(ApplicationConfig.LOG_FILE_PATH, false);

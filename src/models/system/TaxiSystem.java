@@ -22,6 +22,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class TaxiSystem extends SimpleCirculationThread implements TaxiSystemInterface {
     /**
+     * @overview:
+     *          出租车系统
+     */
+
+    /**
      * 请求时间窗
      */
     private static final long REQUEST_TIME_WINDOW = 7500;

@@ -16,6 +16,17 @@ import models.time.Timestamp;
  */
 public abstract class ApplicationThread extends Thread implements ApplicationThreadInterface {
     /**
+     * @overview:
+     *          全局线程基类
+     *          <p>
+     *          特性：
+     *          1、提供全局容错机制，出现异常抛出即可，将触发exceptionCaught事件
+     *          <p>
+     *          建议：
+     *          1、强烈推荐使用sleepUntil，可以有效避免长时间的累积误差，精度较高（大概每10次才会出现一个肉眼可见的误差）且cpu占用很低（不像一般的while循环等待，在100线程时完全不卡）
+     */
+
+    /**
      * 调用方法并进行异常捕捉
      */
     @Override

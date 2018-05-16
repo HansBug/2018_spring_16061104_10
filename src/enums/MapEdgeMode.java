@@ -10,6 +10,11 @@ import java.util.List;
  * 边连接模型
  */
 public enum MapEdgeMode implements Iterable<Direction>, ApplicationClassInterface {
+    /**
+     * @overview:
+     *          边连接模型
+     */
+
     NONE_CONNECTION(0),
     RIGHT_CONNECTION(1, Direction.RIGHT),
     DOWN_DIRECTION(2, Direction.DOWN),

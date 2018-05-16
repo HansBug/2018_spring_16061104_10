@@ -26,6 +26,23 @@ import java.util.function.Function;
  */
 public class HashExpireMap<K, V> extends HashMap<K, V> implements ApplicationClassInterface {
     /**
+     * @overview:
+     *          支持超时功能的HashMap
+     *          <p>
+     *          特性：
+     *          1、支持超时功能，即一个键值对只有一定的有效期（也可以设置为无限有效期），过期后自动删除
+     *          2、采用局部+整体增量维护算法，理论上性能可靠且资源占用低
+     *          3、对核心操作均进行了线程安全保护
+     *          <p>
+     *          注：
+     *          1、该类目前尚未经过大量生产环境测试，如果遇到bug请联系作者
+     *          2、该类大部分方法规格与父类HashMap一致（之所以重写只是因为需要进行数据同步性维护），故大部分方法将省略规格
+     *          
+     *          @param <K> key类型
+     *          @param <V> value类型
+     */
+
+    /**
      * 带时间的key对象
      */
     private class TimeBasedKey extends TimeBasedObject<K> {

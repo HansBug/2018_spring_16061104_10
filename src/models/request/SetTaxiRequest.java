@@ -18,6 +18,11 @@ import java.util.regex.Matcher;
  */
 public class SetTaxiRequest extends InteractiveSystemRequest {
     /**
+     * @overview:
+     *          设置出租车位置请求
+     */
+
+    /**
      * 出租车位置
      */
     private final Node position;

@@ -11,6 +11,14 @@ import interfaces.application.ApplicationInterface;
  */
 public interface AbstractTimelineThreadInterface<T, K> extends ApplicationInterface {
     /**
+     * @overview:
+     *          抽象时间线接口
+     *          
+     *          @param <T> 传入数据类型
+     *          @param <K> 内部运转数据类型
+     */
+
+    /**
      * 数据解打包器
      *
      * @param pack 数据包

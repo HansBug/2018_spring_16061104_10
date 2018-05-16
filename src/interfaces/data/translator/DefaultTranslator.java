@@ -7,6 +7,13 @@ package interfaces.data.translator;
  */
 public interface DefaultTranslator<X> extends Translator<X, X> {
     /**
+     * @overview:
+     *          默认同类转换器
+     *          
+     *          @param <X> 数据类型
+     */
+
+    /**
      * 对象原样转化
      *
      * @param origin 原对象

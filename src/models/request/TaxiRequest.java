@@ -15,6 +15,11 @@ import java.util.regex.Matcher;
  */
 public class TaxiRequest extends GuestRequest {
     /**
+     * @overview:
+     *          出租车请求
+     */
+
+    /**
      * 出发点
      */
     private final Node source;

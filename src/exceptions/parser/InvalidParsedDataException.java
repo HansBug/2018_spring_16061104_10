@@ -5,6 +5,11 @@ package exceptions.parser;
  */
 public class InvalidParsedDataException extends ParserException {
     /**
+     * @overview:
+     *          数据非法异常
+     */
+
+    /**
      * 构造函数
      *
      * @param message       异常信息

@@ -9,6 +9,11 @@ import models.system.Taxi;
  */
 public interface TaxiSystemInterface {
     /**
+     * @overview:
+     *          出租车系统接口
+     */
+
+    /**
      * 出租车经过边
      *
      * @param taxi 出租车

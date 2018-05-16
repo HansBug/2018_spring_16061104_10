@@ -7,6 +7,11 @@ import interfaces.application.ApplicationClassInterface;
  */
 public enum TaxiStatus implements ApplicationClassInterface {
     /**
+     * @overview:
+     *          出租车状态枚举类
+     */
+
+    /**
      * 各个枚举项
      */
     STOPPED(0),

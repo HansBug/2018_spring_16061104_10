@@ -7,6 +7,11 @@ import exceptions.application.ApplicationException;
  */
 public class InvalidPropertyException extends ApplicationException {
     /**
+     * @overview:
+     *          非法参数异常
+     */
+
+    /**
      * 异常原数据
      */
     protected final Object data;

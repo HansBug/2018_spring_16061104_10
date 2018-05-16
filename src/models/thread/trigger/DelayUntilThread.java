@@ -17,6 +17,19 @@ import models.time.Timestamp;
  */
 public abstract class DelayUntilThread<T> extends TriggerThread<T> {
     /**
+     * @overview:
+     *          直到型等待线程
+     *          <p>
+     *          特性：
+     *          1、继承TriggerThread
+     *          <p>
+     *          功能：
+     *          1、start后在指定的时间戳上触发trigger
+     *          
+     *          @param <T> 返回值类型
+     */
+
+    /**
      * 等待目标时间
      */
     private Timestamp until_time;

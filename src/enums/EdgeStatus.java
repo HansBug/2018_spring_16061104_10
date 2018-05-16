@@ -6,6 +6,11 @@ import interfaces.application.ApplicationClassInterface;
  * 边状态
  */
 public enum EdgeStatus implements ApplicationClassInterface {
+    /**
+     * @overview:
+     *          边状态
+     */
+
     CONNECT,
     DISCONNECT;
     

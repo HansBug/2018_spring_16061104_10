@@ -13,6 +13,16 @@ import exceptions.data.property.NullPropertyException;
  */
 public class NotNullPropertyModel<T> extends PropertyModel<T> {
     /**
+     * @overview:
+     *          非null数据验证类
+     *          <p>
+     *          用途：
+     *          1、对数据段进行非null判定
+     *          
+     *          @param <T> 数据类型
+     */
+
+    /**
      * 构造函数
      *
      * @param data 初始值

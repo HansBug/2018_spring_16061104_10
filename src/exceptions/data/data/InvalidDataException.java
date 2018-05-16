@@ -7,6 +7,11 @@ import exceptions.application.ApplicationException;
  */
 public abstract class InvalidDataException extends ApplicationException {
     /**
+     * @overview:
+     *          非法数据异常
+     */
+
+    /**
      * 非法的数据
      */
     private final Object data;

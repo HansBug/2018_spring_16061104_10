@@ -6,6 +6,10 @@ import javax.swing.*;
 
 class debugform extends JFrame implements ApplicationShitCode {
     /**
+     * @overview:
+     */
+
+    /**
      *
      */
     private static final long serialVersionUID = 1L;

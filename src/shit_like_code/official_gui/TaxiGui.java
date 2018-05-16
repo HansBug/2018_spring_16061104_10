@@ -5,6 +5,10 @@ import interfaces.application.ApplicationShitCode;
 import java.awt.*;
 
 public class TaxiGui implements ApplicationShitCode {// GUI接口类
+    /**
+     * @overview:
+     */
+
     
     public void LoadMap(int[][] map, int size) {
         guigv.m.map = new int[size + 5][size + 5];

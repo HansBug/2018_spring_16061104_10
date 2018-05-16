@@ -14,6 +14,20 @@ package models.structure.pair;
  */
 public class ComparablePair<X extends Comparable<X>, Y extends Comparable<Y>> extends GenericPair<X, Y> implements Comparable<ComparablePair<X, Y>> {
     /**
+     * @overview:
+     *          可比较大小二元对类
+     *          <p>
+     *          特性：
+     *          1、在GenericPair类基础上，提供比较大小功能
+     *          <p>
+     *          注：
+     *          1、X类型和Y类型必须继承Comparable接口
+     *          
+     *          @param <X> 类型X（必须继承Comparable接口）
+     *          @param <Y> 类型Y（必须继承Comparable接口）
+     */
+
+    /**
      * 构造函数
      *
      * @param first  第一个值

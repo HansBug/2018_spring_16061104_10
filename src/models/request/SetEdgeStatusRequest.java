@@ -18,6 +18,11 @@ import java.util.regex.Matcher;
  */
 public class SetEdgeStatusRequest extends InteractiveSystemRequest {
     /**
+     * @overview:
+     *          设置边状态
+     */
+
+    /**
      * 边
      */
     private final Edge edge;

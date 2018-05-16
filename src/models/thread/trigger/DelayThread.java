@@ -15,6 +15,19 @@ import events.thread.ThreadBeforeTriggerEvent;
  */
 public abstract class DelayThread<T> extends TriggerThread<T> {
     /**
+     * @overview:
+     *          延时触发线程
+     *          <p>
+     *          特性：
+     *          1、继承TriggerThread
+     *          <p>
+     *          功能：
+     *          1、start后等待一定的时间（sleep）后触发trigger
+     *          
+     *          @param <T> 返回值类型
+     */
+
+    /**
      * 等待时间
      */
     private long wait_time;

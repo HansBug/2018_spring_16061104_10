@@ -5,6 +5,11 @@ package models.map;
  */
 public class WeightFlowSource extends WeightFlow {
     /**
+     * @overview:
+     *          边权流量来源对象
+     */
+
+    /**
      * 来源点
      */
     private final Node source;

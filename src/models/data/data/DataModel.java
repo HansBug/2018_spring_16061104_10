@@ -23,6 +23,20 @@ import java.util.HashSet;
  */
 public abstract class DataModel extends TimeBasedModel implements ModelValidator {
     /**
+     * @overview:
+     *          数据模型基类
+     *          <p>
+     *          特性：
+     *          1、自带时间戳属性
+     *          2、自带数据验证接口，可供数据有效性验证
+     *          3、可自定义注册数据验证器，由基类统一管理
+     *          <p>
+     *          建议：
+     *          1、继承此类来进行输入数据的管理
+     *          2、子类中数据字段尽量使用数据验证器统一管理，并在初始化的时候进行注册
+     */
+
+    /**
      * 数据验证模型存储
      */
     private final HashSet<PropertyModel> validation_models = new HashSet<>();

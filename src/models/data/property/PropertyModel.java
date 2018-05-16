@@ -21,6 +21,23 @@ import models.application.ApplicationModel;
  */
 public abstract class PropertyModel<T> extends ApplicationModel implements PropertyValidator<T> {
     /**
+     * @overview:
+     *          数据字段验证模型
+     *          <p>
+     *          用途：
+     *          1、读写数据字段
+     *          2、提供自定义数据验证功能
+     *          3、支持多个属性验证接口合并为一个数据验证模块
+     *          <p>
+     *          建议：
+     *          1、可以直接实例化抽象类实现自定义数据验证
+     *          2、可以继承此类实现数据验证逻辑封装
+     *          3、如有需要可以重写getErrorMessage方法，订制错误信息
+     *          
+     *          @param <T> 字段类型
+     */
+
+    /**
      * 数据存储
      */
     protected T data;

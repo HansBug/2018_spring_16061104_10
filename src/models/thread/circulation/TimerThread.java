@@ -22,6 +22,20 @@ import models.time.Timestamp;
  */
 public abstract class TimerThread extends SimpleCirculationThread implements TriggerInterface {
     /**
+     * @overview:
+     *          等间隔定时任务
+     *          <p>
+     *          用途：
+     *          1、等间隔定时触发同一任务
+     *          <p>
+     *          特性：
+     *          1、系统资源占用低
+     *          2、精度较高，且不存在累积误差
+     *          3、适合用于等间隔触发的同一定时任务
+     *          4、由于每次触发都开启独立线程，故即便运行速度较慢也完全不会影响后续的触发时间
+     */
+
+    /**
      * 基础时间戳
      */
     private Timestamp timestamp;

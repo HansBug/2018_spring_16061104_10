@@ -7,6 +7,11 @@ import exceptions.data.property.InvalidPropertyException;
  */
 public class InvalidDataPropertyException extends InvalidDataException {
     /**
+     * @overview:
+     *          数据属性异常
+     */
+
+    /**
      * 属性异常异常类
      */
     private final InvalidPropertyException property_exception;

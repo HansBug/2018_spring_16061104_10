@@ -30,6 +30,11 @@ import static enums.TaxiStatus.STOPPED;
  */
 public abstract class Taxi extends SimpleCirculationThread implements TaxiInterface {
     /**
+     * @overview:
+     *          出租车类
+     */
+
+    /**
      * 常数项
      */
     private static final long TAXI_RUN_TIME = 500;

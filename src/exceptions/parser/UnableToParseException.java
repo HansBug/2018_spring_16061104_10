@@ -8,6 +8,14 @@ package exceptions.parser;
  */
 public class UnableToParseException extends ParserException {
     /**
+     * @overview:
+     *          解析错误类
+     *          <p>
+     *          用途：
+     *          1、用于表示静态解析类的解析错误（例如IntegerParser的错误）
+     */
+
+    /**
      * 构造函数
      *
      * @param message       异常信息

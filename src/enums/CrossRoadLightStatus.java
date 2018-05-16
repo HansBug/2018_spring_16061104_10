@@ -7,6 +7,11 @@ import interfaces.application.ApplicationClassInterface;
  */
 public enum CrossRoadLightStatus implements ApplicationClassInterface {
     /**
+     * @overview:
+     *          十字路口状态
+     */
+
+    /**
      * 两种状态
      */
     NONE(0),

@@ -10,6 +10,13 @@ import models.time.Timestamp;
  */
 public class ThreadTriggerEvent<T> extends ApplicationThreadEvent {
     /**
+     * @overview:
+     *          线程触发器事件对象
+     *          
+     *          @param <T> 附加数据段类型
+     */
+
+    /**
      * 触发时间
      */
     private final Timestamp target_timestamp;

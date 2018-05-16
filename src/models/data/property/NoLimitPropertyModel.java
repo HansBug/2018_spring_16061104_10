@@ -12,6 +12,16 @@ import exceptions.data.property.InvalidPropertyException;
  */
 public class NoLimitPropertyModel<T> extends PropertyModel<T> {
     /**
+     * @overview:
+     *          无限制数据验证器
+     *          <p>
+     *          特性：
+     *          1、验证结果永远返回true
+     *          
+     *          @param <T> 数据类型
+     */
+
+    /**
      * 构造函数
      *
      * @param data 初始值

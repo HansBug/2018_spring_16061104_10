@@ -7,6 +7,11 @@ import models.thread.ApplicationThread;
  */
 public class ThreadBeforeTriggerEvent extends ApplicationThreadEvent {
     /**
+     * @overview:
+     *          触发器触发前预判事件
+     */
+
+    /**
      * 允许触发
      */
     private boolean allow_trigger = true;

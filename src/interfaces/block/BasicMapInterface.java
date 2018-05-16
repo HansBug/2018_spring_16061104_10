@@ -10,6 +10,11 @@ import models.map.Edge;
  */
 public interface BasicMapInterface extends ApplicationInterface {
     /**
+     * @overview:
+     *          基本地图类接口
+     */
+
+    /**
      * 获取边权
      *
      * @param edge 边

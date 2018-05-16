@@ -7,6 +7,11 @@ import java.math.BigInteger;
  */
 public class BigIntegerParser extends BasicDataTypeParser<BigInteger> {
     /**
+     * @overview:
+     *          BigInteger解析
+     */
+
+    /**
      * 解析
      *
      * @param str 原字符串

@@ -9,6 +9,15 @@ package models.thread.circulation;
  */
 public abstract class SimpleCirculationThread extends NotifyCirculationThread {
     /**
+     * @overview:
+     *          简单轮询线程
+     *          <p>
+     *          特性：
+     *          1、不支持自定义阻塞（一律设置为不阻塞）
+     *          2、支持从外部下达退出指令
+     */
+
+    /**
      * 是否处于等待退出模式
      */
     private boolean waiting_for_quit = false;

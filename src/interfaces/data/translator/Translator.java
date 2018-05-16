@@ -11,6 +11,14 @@ import interfaces.application.ApplicationInterface;
  */
 public interface Translator<X, Y> extends ApplicationInterface {
     /**
+     * @overview:
+     *          对象转化接口
+     *          
+     *          @param <X> 原数据类型
+     *          @param <Y> 新数据类型
+     */
+
+    /**
      * 对象转化
      *
      * @param origin 原对象

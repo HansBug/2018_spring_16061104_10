@@ -9,6 +9,11 @@ import interfaces.application.ApplicationInterface;
  */
 public interface ApplicationThreadInterface extends ApplicationInterface {
     /**
+     * @overview:
+     *          线程接口
+     */
+
+    /**
      * 执行方法
      *
      * @throws Throwable 任意异常类

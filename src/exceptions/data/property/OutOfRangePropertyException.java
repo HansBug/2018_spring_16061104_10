@@ -5,6 +5,11 @@ package exceptions.data.property;
  */
 public class OutOfRangePropertyException extends InvalidPropertyException {
     /**
+     * @overview:
+     *          数据不在范围内异常
+     */
+
+    /**
      * 构造函数
      *
      * @param data    异常原数据

@@ -5,6 +5,11 @@ package interfaces.thread;
  */
 public interface NotifyCirculationThreadInterface extends ApplicationThreadInterface {
     /**
+     * @overview:
+     *          提醒轮询线程接口
+     */
+
+    /**
      * 轮询开始前执行
      *
      * @throws Throwable 异常类

@@ -7,6 +7,11 @@ import exceptions.application.ApplicationException;
  */
 public abstract class MapException extends ApplicationException {
     /**
+     * @overview:
+     *          Block异常类
+     */
+
+    /**
      * 构造函数
      *
      * @param message 异常信息

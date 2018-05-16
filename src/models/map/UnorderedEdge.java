@@ -7,6 +7,11 @@ import models.structure.pair.UnorderedPair;
  */
 public class UnorderedEdge extends UnorderedPair<Node> {
     /**
+     * @overview:
+     *          无向边类
+     */
+
+    /**
      * 构造函数
      *
      * @param first  第一个节点

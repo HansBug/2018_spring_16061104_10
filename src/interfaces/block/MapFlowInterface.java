@@ -10,6 +10,11 @@ import models.structure.pair.UnorderedPair;
  */
 public interface MapFlowInterface extends BasicMapInterface {
     /**
+     * @overview:
+     *          BlockMap接口
+     */
+
+    /**
      * 获取边流量
      *
      * @param e 无向边

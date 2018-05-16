@@ -15,6 +15,18 @@ import models.time.Timestamp;
  */
 public class TimeBasedModel extends ApplicationModel implements TimeBasedInterface {
     /**
+     * @overview:
+     *          基于时间戳的模型
+     *          <p>
+     *          特性：
+     *          1、在模型初始化的时候自动获取当前系统时间戳
+     *          2、提供protect方法，支持在子类中修改时间戳（如果需要支持外部访问，请overwrite一个public方法）
+     *          <p>
+     *          用途：
+     *          1、对于基于时间的模型，可以直接继承，减少工作量
+     */
+
+    /**
      * 时间戳属性
      */
     private Timestamp timestamp;

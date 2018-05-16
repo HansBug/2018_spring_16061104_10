@@ -7,6 +7,11 @@ import models.thread.ApplicationThread;
  */
 public class ThreadExceptionEvent extends ApplicationThreadEvent {
     /**
+     * @overview:
+     *          线程出现异常事件
+     */
+
+    /**
      * 异常类
      */
     private final Throwable throwable;

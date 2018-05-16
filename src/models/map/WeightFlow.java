@@ -7,6 +7,11 @@ import models.structure.pair.ComparablePair;
  */
 public class WeightFlow extends ComparablePair<Integer, Integer> {
     /**
+     * @overview:
+     *          边权和流量二元对类
+     */
+
+    /**
      * 构造函数
      *
      * @param weight 边权
