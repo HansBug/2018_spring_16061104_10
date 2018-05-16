@@ -9,7 +9,11 @@ import interfaces.block.MapFlowInterface;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * 流量图，可查询流量信息和道路红绿灯信息
+ */
 public abstract class FlowMap extends UnorderedMap implements MapFlowInterface {
+    
     /**
      * 新增边（长度为1）
      *
