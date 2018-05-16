@@ -74,6 +74,15 @@
 * **LEFT** 向左，行为为`y -= 1`
 * **RIGHT** 向右，行为为`y += 1`
 
+#### 红绿灯
+* **RED** 红灯
+* **GREEN** 绿灯
+
+#### 路口状态
+* **NONE** 无红绿灯（对应值`0`）
+* **EAST_WEST** 东西向绿灯（对应值`1`）
+* **NORTH_SOUTH** 南北向绿灯（对应值`2`）
+
 ## 使用
 ### 地图输入
 格式参见[指导书](http://misaka-oss.oss-cn-beijing.aliyuncs.com/cs/oo/OO%E7%AC%AC10%E6%AC%A1%E4%BD%9C%E4%B8%9A%E6%8C%87%E5%AF%BC%E4%B9%A6.pdf)，文件名`map.txt`。
@@ -82,6 +91,8 @@
 
 ### 信号灯输入
 格式参见[指导书](http://misaka-oss.oss-cn-beijing.aliyuncs.com/cs/oo/OO%E7%AC%AC10%E6%AC%A1%E4%BD%9C%E4%B8%9A%E6%8C%87%E5%AF%BC%E4%B9%A6.pdf)，文件名`traffic.txt`。
+
+格式为80x80的矩阵，包含数字`0`、`1`、`2`（**对应意义参见路口状态的设定**）
 
 **信号灯采用单独文件输入，而不是load_file输入**
 
@@ -214,7 +225,8 @@ No.98 IN_SERVICE [CR, (1, 2), (39, 79)]
 * 本程序`repOK`均使用全局接口`ApplicationClassInterface`默认实现，除少数类情况特殊进行了重写之外（例如`Node`类），行为均为**判定内部属性（包括私有属性）是否全部不为`null`**（Q：怎么实现的呢？为啥类中找不到`repOK`？ A：自行Google，`java interface default`，提高姿势水平） 
 * <del>请无视官方gui包的包名。Q: 这明明是真心话啊喵？ A: 闭嘴，大实话怎么能瞎说。</del>
 * Q：jsf啥的怎么办？ A：随你咯<del>，120+个类欢迎慢慢找</del>
-* Q：类Overview在哪？ A：每个类上头都有javadoc，等价于Overview。 
+* Q：类Overview在哪？ A：每个类上头都有javadoc，等价于Overview。
+* Q：可以压测不？ A：随你咯<del>，我不会告诉你实测一次性6400个请求都完全不卡的</del> 
 * 看不懂代码？[javadoc在此](javadoc\index.html)，欢迎找bug，<del>给个笑容自己体会，找到bug算我输</del>。（<del>Q：那。。河蟹六系怎么办？ A：这种东西我才不在乎23333。比起这个，这么多次一个bug都没有过才叫寂寞呢</del>）
 
 ![](http://misaka-oss.oss-cn-beijing.aliyuncs.com/others/misaka-sister-1.jpg)

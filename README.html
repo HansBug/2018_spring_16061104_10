@@ -373,12 +373,24 @@ img {
 <li><strong>LEFT</strong> 向左，行为为<code>y -= 1</code></li>
 <li><strong>RIGHT</strong> 向右，行为为<code>y += 1</code></li>
 </ul>
+<h4>红绿灯</h4>
+<ul>
+<li><strong>RED</strong> 红灯</li>
+<li><strong>GREEN</strong> 绿灯</li>
+</ul>
+<h4>路口状态</h4>
+<ul>
+<li><strong>NONE</strong> 无红绿灯（对应值<code>0</code>）</li>
+<li><strong>EAST_WEST</strong> 东西向绿灯（对应值<code>1</code>）</li>
+<li><strong>NORTH_SOUTH</strong> 南北向绿灯（对应值<code>2</code>）</li>
+</ul>
 <h2>使用</h2>
 <h3>地图输入</h3>
 <p>格式参见<a href="http://misaka-oss.oss-cn-beijing.aliyuncs.com/cs/oo/OO%E7%AC%AC10%E6%AC%A1%E4%BD%9C%E4%B8%9A%E6%8C%87%E5%AF%BC%E4%B9%A6.pdf">指导书</a>，文件名<code>map.txt</code>。</p>
 <p><strong>地图仍采用单独文件输入，而不是load_file输入</strong></p>
 <h3>信号灯输入</h3>
 <p>格式参见<a href="http://misaka-oss.oss-cn-beijing.aliyuncs.com/cs/oo/OO%E7%AC%AC10%E6%AC%A1%E4%BD%9C%E4%B8%9A%E6%8C%87%E5%AF%BC%E4%B9%A6.pdf">指导书</a>，文件名<code>traffic.txt</code>。</p>
+<p>格式为80x80的矩阵，包含数字<code>0</code>、<code>1</code>、<code>2</code>（<strong>对应意义参见路口状态的设定</strong>）</p>
 <p><strong>信号灯采用单独文件输入，而不是load_file输入</strong></p>
 <p>此外：</p>
 <ul>
@@ -546,7 +558,7 @@ No.98 IN_SERVICE [CR, (1, 2), (39, 79)]
 <li>本程序<code>repOK</code>均使用全局接口<code>ApplicationClassInterface</code>默认实现，除少数类情况特殊进行了重写之外（例如<code>Node</code>类），行为均为<strong>判定内部属性（包括私有属性）是否全部不为<code>null</code></strong>（Q：怎么实现的呢？为啥类中找不到<code>repOK</code>？ A：自行Google，<code>java interface default</code>，提高姿势水平） </li>
 <li><del>请无视官方gui包的包名。Q: 这明明是真心话啊喵？ A: 闭嘴，大实话怎么能瞎说。</del></li>
 <li>Q：jsf啥的怎么办？ A：随你咯<del>，120+个类欢迎慢慢找</del></li>
-<li>Q：类Overwrite在哪？ A：每个类上头都有javadoc，等价于Overwrite。 </li>
+<li>Q：类Overview在哪？ A：每个类上头都有javadoc，等价于Overview。 </li>
 <li>看不懂代码？<a href="javadoc\index.html">javadoc在此</a>，欢迎找bug，<del>给个笑容自己体会，找到bug算我输</del>。（<del>Q：那。。河蟹六系怎么办？ A：这种东西我才不在乎23333。比起这个，这么多次一个bug都没有过才叫寂寞呢</del>）</li>
 </ul>
 <p><img src="http://misaka-oss.oss-cn-beijing.aliyuncs.com/others/misaka-sister-1.jpg" /></p>

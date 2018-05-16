@@ -54,7 +54,7 @@ public interface ApplicationClassInterface extends ApplicationInterface {
             for (Field field : cls.getDeclaredFields()) {
                 field.setAccessible(true);
                 Object value = field.get(this);
-                if (value == null) return false;
+                if (value == null) break;
             }
             cls = cls.getSuperclass();
         }
