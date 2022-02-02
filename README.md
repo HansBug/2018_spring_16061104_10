@@ -1,6 +1,16 @@
 # OO第十次作业README
+Edit on 2022.2.2:
+
+这是我2018年写的一段沙雕代码，内含大量屎山:shit:，请不要在意，仅作为一个略复杂的项目用于后续工具链的测试用。
+
+This is a piece of bullshit I wrote in 2018, which contains plenty of shit-like code:shit:. Please don't mind. It is only used for the subsequent tool chain test as a slightly complex project.
+
+
+
+Original content:
+
 <del>嘛。。以后要拿中文写文档了呢</del>
-  
+
 [点击就送指导书](http://misaka-oss.oss-cn-beijing.aliyuncs.com/cs/oo/OO%E7%AC%AC10%E6%AC%A1%E4%BD%9C%E4%B8%9A%E6%8C%87%E5%AF%BC%E4%B9%A6.pdf)
 
 ## 运行环境
